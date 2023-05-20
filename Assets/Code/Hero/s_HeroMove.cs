@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Code.Hero
 {
-    public class s_HeroMove : IEcsRunSystem
+    public sealed class s_HeroMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_Hero>> _heroFilter;
+        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter;
         private readonly EcsCustomInject<FloatingJoystick> _joystick;
         public void Run(IEcsSystems systems)
         {
@@ -18,12 +18,12 @@ namespace Code.Hero
             }
         }
 
-        private void Move(ref c_Hero hero)
+        private void Move(ref c_HeroData heroData)
         {
-            hero.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * hero.Speed, hero.heroRigidBody.velocity.y ,_joystick.Value.Vertical * hero.Speed);
+            heroData.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed, heroData.heroRigidBody.velocity.y ,_joystick.Value.Vertical * heroData.Speed);
             if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
             {
-                hero.HeroGameObject.transform.rotation = Quaternion.LookRotation(hero.heroRigidBody.velocity);
+                heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(heroData.heroRigidBody.velocity);
             }
         }
     }

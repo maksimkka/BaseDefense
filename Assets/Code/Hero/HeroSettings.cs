@@ -6,5 +6,6 @@ namespace Code.Hero
     public sealed class HeroSettings : MonoBehaviour
     {
         [field: SerializeField] public float Speed { get; private set; }
+        [field: SerializeField] public int HP { get; private set; }
     }
 }

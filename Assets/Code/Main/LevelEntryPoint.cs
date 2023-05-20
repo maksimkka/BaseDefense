@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Code.Enemy;
+using Code.Ground;
 using Code.Hero;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -53,11 +55,13 @@ namespace Code.Main
         {
             var heroSettings = FindObjectOfType<HeroSettings>(true);
             var joystick = FindObjectOfType<FloatingJoystick>(true);
+            var enemySettings = FindObjectsOfType<EnemySettings>(true);
+            var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
             foreach (var system in _systems)
             {
                 system.Value
-                    .Inject(heroSettings, joystick);
+                    .Inject(heroSettings, joystick, enemySettings, groundSettings);
             }
         }
 
@@ -81,13 +85,16 @@ namespace Code.Main
         private void AddGameSystems()
         {
             _systems[SystemType.Init]
-                .Add(new i_Hero());
+                .Add(new i_Hero())
+                .Add(new i_Enemy())
+                .Add(new i_Ground());
             
-            // _systems[SystemType.Update]
-            //     .Add();
+            _systems[SystemType.Update]
+                .Add(new s_GroundChecker());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new s_HeroMove());
+                .Add(new s_HeroMove())
+                .Add(new s_EnemyMove());
         }
 
         private void OnDestroy()

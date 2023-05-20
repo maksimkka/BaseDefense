@@ -4,6 +4,7 @@ using System.Threading;
 using Code.Enemy;
 using Code.Ground;
 using Code.Hero;
+using Code.Spawner;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Code.Main
     {
         private readonly Dictionary<SystemType, EcsSystems> _systems = new();
         private readonly CancellationTokenSource _tokenSources = new();
+        
 
         private EcsWorld _world;
         private EcsSystems _updateSystem;
@@ -55,13 +57,14 @@ namespace Code.Main
         {
             var heroSettings = FindObjectOfType<HeroSettings>(true);
             var joystick = FindObjectOfType<FloatingJoystick>(true);
+            var spawnerSettings = FindObjectOfType<SpawnerSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
             var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
             foreach (var system in _systems)
             {
                 system.Value
-                    .Inject(heroSettings, joystick, enemySettings, groundSettings);
+                    .Inject(heroSettings, joystick, enemySettings, groundSettings, spawnerSettings);
             }
         }
 

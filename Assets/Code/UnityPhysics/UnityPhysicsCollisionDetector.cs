@@ -7,7 +7,7 @@ namespace Code.UnityPhysics
     [RequireComponent(typeof(Collider))]
     public sealed class UnityPhysicsCollisionDetector : MonoBehaviour
     {
-        public int Entity { get; private set; }
+        private int Entity { get; set; }
         private EcsWorld _world;
         private Collider _collider;
 

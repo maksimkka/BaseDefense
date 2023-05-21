@@ -17,7 +17,6 @@ namespace Code.Main
         private readonly Dictionary<SystemType, EcsSystems> _systems = new();
         private readonly CancellationTokenSource _tokenSources = new();
         
-
         private EcsWorld _world;
         private EcsSystems _updateSystem;
 
@@ -57,7 +56,7 @@ namespace Code.Main
         {
             var heroSettings = FindObjectOfType<HeroSettings>(true);
             var joystick = FindObjectOfType<FloatingJoystick>(true);
-            var spawnerSettings = FindObjectOfType<SpawnerSettings>(true);
+            var spawnerSettings = FindObjectOfType<EnemySpawnerSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
             var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
@@ -80,20 +79,20 @@ namespace Code.Main
 
         private void AddDebugSystems()
         {
-#if UNITY_EDITOR
             _systems[SystemType.Update].Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem());
-#endif
         }
 
         private void AddGameSystems()
         {
             _systems[SystemType.Init]
+                .Add(new i_EnemySpawner())
                 .Add(new i_Hero())
                 .Add(new i_Enemy())
                 .Add(new i_Ground());
             
             _systems[SystemType.Update]
-                .Add(new s_GroundChecker());
+                .Add(new s_GroundChecker())
+                .Add(new s_EnemiesSpawner());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

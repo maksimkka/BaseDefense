@@ -17,6 +17,7 @@ namespace Code.Enemy
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
+                if(!enemy.EnemyGameObject.activeSelf) continue;
                 Move(ref enemy);
             }
         }
@@ -58,6 +59,7 @@ namespace Code.Enemy
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
+                if(!enemy.EnemyGameObject.activeSelf) continue;
                 enemy.NavMeshAgent.isStopped = isStopped;
                 enemy.States = state;
             }

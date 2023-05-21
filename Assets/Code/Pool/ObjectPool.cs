@@ -1,45 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using Leopotam.EcsLite;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Code.Pools
 {
-    public class ObjectPool <T> where T : Component
+    public sealed class ObjectPool <T> where T : Component
     {
-        private readonly Stack<T> objectPool;
+        private readonly Queue<T> objectPool;
         private readonly T prefab;
         private readonly Transform parentTransform;
-        private readonly EcsWorld world;
+        private readonly Action<T> _initWithInECS;
+        private const int RefillCount = 15;
 
-        public ObjectPool(T prefab, Transform parentTransform, EcsWorld world, int initialSize = 10, Action<T> initWithInEcs = null)
+        public ObjectPool(T prefab, Transform parentTransform, int initialSize = 10, Action<T> initWithInEcs = null)
         {
             this.prefab = prefab;
             this.parentTransform = parentTransform;
-            this.world = world;
+            _initWithInECS = initWithInEcs;
 
-            objectPool = new Stack<T>(initialSize);
-            for (int i = 0; i < initialSize; i++)
+            objectPool = new Queue<T>(initialSize);
+            FillPool(initialSize);
+        }
+        
+        private void FillPool(int fillCount)
+        {
+            for (int i = 0; i < fillCount; i++)
             {
                 T obj = Object.Instantiate(prefab, parentTransform);
-                obj.gameObject.SetActive(false);
-                objectPool.Push(obj);
+                _initWithInECS?.Invoke(obj);
+
+                ReturnObject(obj);
             }
         }
 
-        public T GetObject()
+        public T GetObject(Vector3 position, Quaternion rotation)
         {
-            T obj;
-            if (objectPool.Count > 0)
+            if (objectPool.Count <= 0)
             {
-                obj = objectPool.Pop();
-            }
-            else
-            {
-                obj = Object.Instantiate(prefab, parentTransform);
+                FillPool(RefillCount);
             }
 
+            var obj = objectPool.Dequeue();
+            var newGameObjectTransform = obj.transform;
+            newGameObjectTransform.position = position;
+            newGameObjectTransform.rotation = rotation;
             obj.gameObject.SetActive(true);
             return obj;
         }
@@ -47,7 +52,7 @@ namespace Code.Pools
         public void ReturnObject(T obj)
         {
             obj.gameObject.SetActive(false);
-            objectPool.Push(obj);
+            objectPool.Enqueue(obj);
         }
     }
 }

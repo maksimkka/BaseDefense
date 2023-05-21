@@ -7,8 +7,8 @@ namespace Code.Hero
 {
     public sealed class s_HeroMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter;
-        private readonly EcsCustomInject<FloatingJoystick> _joystick;
+        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
+        private readonly EcsCustomInject<FloatingJoystick> _joystick = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _heroFilter.Value)

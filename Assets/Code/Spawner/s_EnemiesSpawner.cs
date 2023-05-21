@@ -15,7 +15,7 @@ namespace Code.Spawner
             foreach (var entity in _filterSpawnEnemy.Value)
             {
                 ref var enemySpawnData = ref _filterSpawnEnemy.Pools.Inc1.Get(entity);
-                Timer(ref  enemySpawnData);
+                Timer(ref enemySpawnData);
             }
         }
 

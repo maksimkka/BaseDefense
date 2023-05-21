@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Code.Bullet;
 using Code.Enemy;
 using Code.Ground;
 using Code.Hero;
 using Code.Spawner;
+using Code.Weapon;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -57,13 +59,14 @@ namespace Code.Main
             var heroSettings = FindObjectOfType<HeroSettings>(true);
             var joystick = FindObjectOfType<FloatingJoystick>(true);
             var spawnerSettings = FindObjectOfType<EnemySpawnerSettings>(true);
+            var WeaponSettings = FindObjectOfType<WeaponSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
             var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
             foreach (var system in _systems)
             {
                 system.Value
-                    .Inject(heroSettings, joystick, enemySettings, groundSettings, spawnerSettings);
+                    .Inject(heroSettings, joystick, enemySettings, groundSettings, spawnerSettings, WeaponSettings);
             }
         }
 
@@ -86,13 +89,17 @@ namespace Code.Main
         {
             _systems[SystemType.Init]
                 .Add(new i_EnemySpawner())
+                .Add(new i_HeroWeapon())
+                .Add(new i_Bullet())
                 .Add(new i_Hero())
                 .Add(new i_Enemy())
                 .Add(new i_Ground());
-            
+
             _systems[SystemType.Update]
                 .Add(new s_GroundChecker())
-                .Add(new s_EnemiesSpawner());
+                .Add(new s_EnemiesSpawner())
+                .Add(new s_HeroShooting())
+                .Add(new s_BulletLifeCycle());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

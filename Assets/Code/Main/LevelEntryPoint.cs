@@ -99,7 +99,9 @@ namespace Code.Main
                 .Add(new s_GroundChecker())
                 .Add(new s_EnemiesSpawner())
                 .Add(new s_HeroShooting())
-                .Add(new s_BulletLifeCycle());
+                .Add(new s_BulletLifeCycle())
+                .Add(new s_BulletCollision())
+                .Add(new s_ReturnerBulletToPool());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

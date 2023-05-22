@@ -13,4 +13,5 @@ public static class Layers
     public const int Enemy = 6;
     public const int BaseGround = 7;
     public const int OtherGround = 8;
+    public const int Bullet = 8;
 }

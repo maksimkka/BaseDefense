@@ -23,7 +23,7 @@ namespace Code.Hero
             heroData.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed, heroData.heroRigidBody.velocity.y ,_joystick.Value.Vertical * heroData.Speed);
             if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
             {
-                heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(heroData.heroRigidBody.velocity);
+                heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(new Vector3(heroData.heroRigidBody.velocity.x, 0, heroData.heroRigidBody.velocity.z));
             }
         }
     }

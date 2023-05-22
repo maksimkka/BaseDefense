@@ -1,5 +1,7 @@
-﻿using Code.Bullet;
+﻿using System.Collections.Generic;
+using Code.Bullet;
 using Code.Pools;
+using Code.UnityPhysics;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -8,8 +10,10 @@ namespace Code.Weapon
 {
     public sealed class i_Bullet : IEcsInitSystem
     {
-        private readonly EcsPoolInject<c_BulletData> c_BulletData = default;
         private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent;
+        private readonly EcsPoolInject<c_BulletData> c_BulletData = default;
+
         private IEcsSystems _system;
 
         public void Init(IEcsSystems systems)
@@ -31,9 +35,15 @@ namespace Code.Weapon
             var entity = _system.GetWorld().NewEntity();
             ref var bulletData = ref c_BulletData.Value.Add(entity);
             var bulletSettings = bulletCollider.GetComponent<BulletSettings>();
+            bulletSettings.SetEntity(entity);
             bulletData.BulletRigidBody = bulletCollider.GetComponent<Rigidbody>();
             bulletData.BulletGameObject = bulletCollider;
             bulletData.DefaultLifeTime = bulletSettings.DefaultLifeTime;
+            
+            ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
+            unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();
+            bulletData.Detector = bulletSettings.GetComponent<UnityPhysicsCollisionDetector>();
+            bulletData.Detector.Init(entity, _system.GetWorld());
         }
     }
 }

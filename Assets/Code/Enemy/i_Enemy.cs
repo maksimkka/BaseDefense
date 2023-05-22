@@ -1,7 +1,9 @@
-﻿using Code.Hero;
+﻿using System.Collections.Generic;
+using Code.Hero;
 using Code.Logger;
 using Code.Pools;
 using Code.Spawner;
+using Code.UnityPhysics;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -12,6 +14,7 @@ namespace Code.Enemy
     public sealed class i_Enemy : IEcsInitSystem
     {
         private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _enemySpawnerFilter;
+        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent;
 
         private readonly EcsPoolInject<c_Enemy> c_Enemy;
         
@@ -39,7 +42,6 @@ namespace Code.Enemy
             var enemySettings = enemyCollider.GetComponent<EnemySettings>();
             ref var enemy = ref c_Enemy.Value.Add(entity);
             enemy.NavMeshAgent = enemyCollider.GetComponent<NavMeshAgent>();
-            enemy.EnemyRigidBody = enemyCollider.GetComponent<Rigidbody>();
             enemy.EnemyGameObject = enemyCollider.gameObject;
             enemy.TargetMove = _heroSettings.Value.gameObject;
             enemy.Distance = enemySettings.Distance;
@@ -47,6 +49,11 @@ namespace Code.Enemy
             enemy.Speed = enemySettings.Speed;
             enemy.HP = enemySettings.HP;
             enemy.States = EnemyStates.Idle;
+            
+            ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
+            unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();
+            enemy.Detector = enemySettings.GetComponent<UnityPhysicsCollisionDetector>();
+            enemy.Detector.Init(entity, _system.GetWorld());
         }
     }
 }

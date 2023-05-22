@@ -20,8 +20,6 @@ namespace Code.Ground
                 unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();
                 groundData.Detector = groundSettings.GetComponent<UnityPhysicsCollisionDetector>();
                 groundData.Detector.Init(entity, systems.GetWorld());
-
-                //groundData.Layer = groundSettings.gameObject.layer == Layers.BaseGround ? Layers.BaseGround : Layers.OtherGround;
             }
         }
     }

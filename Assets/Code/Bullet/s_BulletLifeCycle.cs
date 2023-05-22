@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Code.Bullet
 {
-    public class s_BulletLifeCycle : IEcsRunSystem
+    public sealed class s_BulletLifeCycle : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_BulletData>, Exc<r_ReturnsToThePool>> _bulletFilter = default;
         private readonly EcsPoolInject<r_ReturnsToThePool> r_ReturnsToThePool = default;

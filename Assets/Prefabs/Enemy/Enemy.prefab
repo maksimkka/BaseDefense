@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 10
-  <Distance>k__BackingField: 3
+  <Distance>k__BackingField: 10
   <CooldownAttack>k__BackingField: 3
   <HP>k__BackingField: 2
 --- !u!195 &7091965470037638033

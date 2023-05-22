@@ -7,9 +7,9 @@ namespace Code.Ground
 {
     public sealed class i_Ground : IEcsInitSystem
     {
-        private readonly EcsPoolInject<c_GroundData> c_GroundData;
-        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent;
-        private readonly EcsCustomInject<GroundSettings[]> _groundSettings;
+        private readonly EcsPoolInject<c_GroundData> c_GroundData = default;
+        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent = default;
+        private readonly EcsCustomInject<GroundSettings[]> _groundSettings = default;
         public void Init(IEcsSystems systems)
         {
             foreach (var groundSettings in _groundSettings.Value)

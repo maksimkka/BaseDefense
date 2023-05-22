@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Code.Bullet
 {
-    public class s_ReturnerBulletToPool : IEcsRunSystem
+    public sealed class s_ReturnerBulletToPool : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_BulletData, r_ReturnsToThePool>> _returnBulletToPoolFilter = default;
         private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;

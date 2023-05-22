@@ -10,7 +10,7 @@ namespace Code.Hero
     public sealed class s_GroundChecker : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_CurrentGroundData, UnityPhysicsCollisionDataComponent>> _groundCollisionFilter = default;
-        private readonly EcsPoolInject<r_ChangeGround> r_ChangeGround;
+        private readonly EcsPoolInject<r_ChangeGround> r_ChangeGround = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _groundCollisionFilter.Value)

@@ -7,7 +7,7 @@ namespace Code.Weapon
 {
     public sealed class s_HeroShooting : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsFilterInject<Inc<c_WeaponData, m_CanShoot>> _weaponFilter = default;
         private readonly EcsPoolInject<c_BulletData> c_BulletData = default;
 
         private float _currentReloadTime;

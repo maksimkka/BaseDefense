@@ -5,10 +5,10 @@ using Leopotam.EcsLite.Di;
 
 namespace Code.Enemy
 {
-    public class s_ChangerStateEnemies : IEcsRunSystem
+    public sealed class s_ChangerStateEnemies : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_CurrentGroundData, r_ChangeGround>> _currentGroundFilter;
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter;
+        private readonly EcsFilterInject<Inc<c_CurrentGroundData, r_ChangeGround>> _currentGroundFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
 
         public void Run(IEcsSystems systems)
         {

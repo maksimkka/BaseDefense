@@ -28,6 +28,7 @@ namespace Code.Hero
             hero.heroRigidBody = _heroSettings.Value.GetComponent<Rigidbody>();
             hero.Speed = _heroSettings.Value.Speed;
             hero.HP = _heroSettings.Value.HP;
+            hero.Distance = _heroSettings.Value.Distance;
         }
     }
 }

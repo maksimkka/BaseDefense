@@ -7,5 +7,6 @@ namespace Code.Hero
     {
         [field: SerializeField] public float Speed { get; private set; }
         [field: SerializeField] public int HP { get; private set; }
+        [field: SerializeField] public int Distance { get; private set; }
     }
 }

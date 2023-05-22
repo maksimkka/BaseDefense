@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 133202275}
   - component: {fileID: 133202274}
   - component: {fileID: 133202273}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133202271}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ae25adf09260b08449a88f38df7a18da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 507329977}
   - component: {fileID: 507329976}
   - component: {fileID: 507329975}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507329973}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ae25adf09260b08449a88f38df7a18da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 510994776}
   - component: {fileID: 510994775}
   - component: {fileID: 510994774}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510994772}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ae25adf09260b08449a88f38df7a18da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -844,9 +844,9 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 833955798}
   - component: {fileID: 833955797}
   - component: {fileID: 833955796}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,7 +929,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833955794}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ae25adf09260b08449a88f38df7a18da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1832,6 +1832,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: <Distance>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1201840489660707058, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: m_Height
       value: 1.8

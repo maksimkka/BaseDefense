@@ -8,7 +8,7 @@ namespace Code.Enemy
 {
     public sealed class s_EnemyMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter;
+        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
         public void Run(IEcsSystems systems)
         {
 

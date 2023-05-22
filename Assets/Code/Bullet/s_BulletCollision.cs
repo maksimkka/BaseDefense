@@ -34,7 +34,6 @@ namespace Code.Bullet
 
                 if (collisionEnter.dto.OtherCollider.gameObject.layer == Layers.Enemy)
                 {
-                    "1111111111111111".Colored(Color.cyan).Log();
                     r_ReturnsToThePool.Value.Add(bulletDataEntity); 
                     ref var takingDamage = ref r_TakingDamage.Value.Add(enemyDataEntity);
                     takingDamage.Damage = bulletData.Damage;

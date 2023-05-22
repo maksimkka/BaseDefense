@@ -1,4 +1,6 @@
-﻿using Code.Logger;
+﻿using Code.Enemy;
+using Code.Logger;
+using Code.Weapon;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -7,23 +9,95 @@ namespace Code.Hero
 {
     public sealed class s_HeroMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<c_HeroData, c_CurrentGroundData>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsPoolInject<m_CanShoot> m_CanShoot = default;
         private readonly EcsCustomInject<FloatingJoystick> _joystick = default;
+
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _heroFilter.Value)
             {
                 ref var hero = ref _heroFilter.Pools.Inc1.Get(entity);
+                ref var currentGround = ref _heroFilter.Pools.Inc2.Get(entity);
                 Move(ref hero);
+                IsCheckDistance(ref hero, ref currentGround);
+                Rotate(ref hero);
             }
         }
 
         private void Move(ref c_HeroData heroData)
         {
-            heroData.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed, heroData.heroRigidBody.velocity.y ,_joystick.Value.Vertical * heroData.Speed);
-            if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
+            heroData.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed,
+                heroData.heroRigidBody.velocity.y, _joystick.Value.Vertical * heroData.Speed);
+        }
+
+        private void IsCheckDistance(ref c_HeroData heroData, ref c_CurrentGroundData currentGroundData)
+        {
+            heroData.TargetRotation = null;
+            float closestDistance = Mathf.Infinity;
+            
+            foreach (var enemyEntity in _enemyFilter.Value)
             {
-                heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(new Vector3(heroData.heroRigidBody.velocity.x, 0, heroData.heroRigidBody.velocity.z));
+                ref var enemy = ref _enemyFilter.Pools.Inc1.Get(enemyEntity);
+                if (!enemy.EnemyGameObject.gameObject.activeSelf) continue;
+                
+                var distance = Vector3.Distance(heroData.HeroGameObject.transform.position,
+                    enemy.EnemyGameObject.transform.position);
+
+                if (!currentGroundData.IsBaseGround && distance < closestDistance && distance <= heroData.Distance)
+                {
+                    closestDistance = distance;
+                    heroData.TargetRotation = enemy.EnemyGameObject.transform;
+                    
+                }
+            }
+        }
+        
+        private void Rotate(ref c_HeroData heroData)
+        {
+            if (heroData.TargetRotation == null)
+            {
+                if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
+                {
+                    heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(new Vector3(
+                        heroData.heroRigidBody.velocity.x, 
+                        0,
+                        heroData.heroRigidBody.velocity.z));
+                    AddShootMarker(false);
+                }
+            }
+
+            else if(heroData.TargetRotation != null)
+            {
+                Vector3 originalRotation = heroData.HeroGameObject.transform.eulerAngles;
+                heroData.HeroGameObject.transform.LookAt(new Vector3(
+                    heroData.TargetRotation.position.x,
+                    heroData.HeroGameObject.transform.position.y,
+                    heroData.TargetRotation.position.z));
+                
+                heroData.HeroGameObject.transform.eulerAngles = new Vector3(
+                    originalRotation.x, 
+                    heroData.HeroGameObject.transform.eulerAngles.y, 
+                    originalRotation.z);
+                AddShootMarker(true);
+            }
+        }
+
+        private void AddShootMarker(bool isCanShoot)
+        {
+            foreach (var entity in _weaponFilter.Value)
+            {
+                switch (isCanShoot)
+                {
+                    case true when !m_CanShoot.Value.Has(entity):
+                        m_CanShoot.Value.Add(entity);
+                        break;
+                    case false when m_CanShoot.Value.Has(entity):
+                        m_CanShoot.Value.Del(entity);
+                        break;
+                }
             }
         }
     }

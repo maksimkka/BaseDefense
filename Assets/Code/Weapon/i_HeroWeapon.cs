@@ -6,8 +6,8 @@ namespace Code.Weapon
 {
     public sealed class i_HeroWeapon : IEcsInitSystem
     {
-        private readonly EcsPoolInject<c_WeaponData> c_HeroShootData;
-        private readonly EcsCustomInject<WeaponSettings> _weaponSettings;
+        private readonly EcsPoolInject<c_WeaponData> c_HeroShootData = default;
+        private readonly EcsCustomInject<WeaponSettings> _weaponSettings = default;
         public void Init(IEcsSystems systems)
         {
             var entity = systems.GetWorld().NewEntity();

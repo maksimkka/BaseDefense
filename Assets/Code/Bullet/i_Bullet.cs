@@ -11,7 +11,7 @@ namespace Code.Weapon
     public sealed class i_Bullet : IEcsInitSystem
     {
         private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
-        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent;
+        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent = default;
         private readonly EcsPoolInject<c_BulletData> c_BulletData = default;
 
         private IEcsSystems _system;

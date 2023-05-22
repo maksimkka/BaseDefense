@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Code.Spawner
 {
-    public class s_EnemiesSpawner : IEcsRunSystem
+    public sealed class s_EnemiesSpawner : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _filterSpawnEnemy = default;
         private float timerElapsed;

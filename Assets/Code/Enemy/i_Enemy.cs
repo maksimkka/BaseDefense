@@ -13,12 +13,12 @@ namespace Code.Enemy
 {
     public sealed class i_Enemy : IEcsInitSystem
     {
-        private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _enemySpawnerFilter;
-        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent;
+        private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _enemySpawnerFilter = default;
+        private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent = default;
 
-        private readonly EcsPoolInject<c_Enemy> c_Enemy;
+        private readonly EcsPoolInject<c_Enemy> c_Enemy = default;
         
-        private readonly EcsCustomInject<HeroSettings> _heroSettings;
+        private readonly EcsCustomInject<HeroSettings> _heroSettings = default;
         private IEcsSystems _system;
 
         public void Init(IEcsSystems systems)

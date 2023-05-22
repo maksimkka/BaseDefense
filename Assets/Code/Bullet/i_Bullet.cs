@@ -39,6 +39,7 @@ namespace Code.Weapon
             bulletData.BulletRigidBody = bulletCollider.GetComponent<Rigidbody>();
             bulletData.BulletGameObject = bulletCollider;
             bulletData.DefaultLifeTime = bulletSettings.DefaultLifeTime;
+            bulletData.Damage = bulletSettings.Damage;
             
             ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
             unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();

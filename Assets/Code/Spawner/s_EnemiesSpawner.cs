@@ -19,6 +19,16 @@ namespace Code.Spawner
             }
         }
 
+        private void Timer(ref c_EnemySpawnerData enemySpawnData)
+        {
+            if(enemySpawnData.CountSpawnEnemies >= enemySpawnData.MaxSpawnEnemies) return;
+            timerElapsed += Time.deltaTime;
+
+            if (!(timerElapsed >= enemySpawnData.SpawnDelay)) return;
+            timerElapsed = 0;
+            SpawnObjects(enemySpawnData.EnemyPool, enemySpawnData.PlaceSpawnObject, ref enemySpawnData.CountSpawnEnemies);
+        }
+        
         private void SpawnObjects(ObjectPool<Collider> enemiesPool, MeshRenderer plane, ref int CountSpawnEnemies)
         {
             var spawnPosition = GetRandomSpawnPosition(plane);
@@ -33,15 +43,6 @@ namespace Code.Spawner
             float randomZ = Random.Range(planeSize.min.z, planeSize.max.z);
 
             return new Vector3(randomX, 0f, randomZ);
-        }
-        private void Timer(ref c_EnemySpawnerData enemySpawnData)
-        {
-            if(enemySpawnData.CountSpawnEnemies >= enemySpawnData.MaxSpawnEnemies) return;
-            timerElapsed += Time.deltaTime;
-
-            if (!(timerElapsed >= enemySpawnData.SpawnDelay)) return;
-            timerElapsed = 0;
-            SpawnObjects(enemySpawnData.EnemyPool, enemySpawnData.PlaceSpawnObject, ref enemySpawnData.CountSpawnEnemies);
         }
     }
 }

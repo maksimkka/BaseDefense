@@ -7,14 +7,15 @@ namespace Code.Enemy
     public struct c_Enemy
     {
         public UnityPhysicsCollisionDetector Detector;
-        public GameObject EnemyGameObject;
+        public Collider EnemyGameObject;
         public NavMeshAgent NavMeshAgent;
         public GameObject TargetMove;
         public EnemyStates States;
         public float CooldownAttack;
         public float Distance;
         public float Speed;
-        public int HP;
+        public int DefaultHP;
+        public int CurrentHP;
         
     }
 }

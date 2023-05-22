@@ -9,15 +9,13 @@ namespace Code.Enemy
     public sealed class s_EnemyMove : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter;
-        private readonly EcsFilterInject<Inc<c_CurrentGroundData, r_ChangeGround>> _currentGroundFilter;
         public void Run(IEcsSystems systems)
         {
-            ChangeStateEnemies();
-            
+
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
-                if(!enemy.EnemyGameObject.activeSelf) continue;
+                if(!enemy.EnemyGameObject.gameObject.activeSelf) continue;
                 Move(ref enemy);
             }
         }
@@ -33,36 +31,6 @@ namespace Code.Enemy
         {
             var distance = Vector3.Distance(enemy.EnemyGameObject.transform.position, enemy.TargetMove.transform.position);
             return distance <= enemy.Distance;
-        }
-
-        private void ChangeStateEnemies()
-        {
-            foreach (var currentGroundEntity in _currentGroundFilter.Value)
-            {
-                var currentGroundData = _currentGroundFilter.Pools.Inc1.Get(currentGroundEntity);
-                if (!currentGroundData.IsBaseGround)
-                {
-                    SwitchState(EnemyStates.Run, false);
-                }
-
-                else
-                {
-                    SwitchState(EnemyStates.Idle, true);
-                }
-                
-                _currentGroundFilter.Pools.Inc2.Del(currentGroundEntity);
-            }
-        }
-
-        private void SwitchState(EnemyStates state, bool isStopped)
-        {
-            foreach (var entity in _enemyFilter.Value)
-            {
-                ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
-                if(!enemy.EnemyGameObject.activeSelf) continue;
-                enemy.NavMeshAgent.isStopped = isStopped;
-                enemy.States = state;
-            }
         }
     }
 }

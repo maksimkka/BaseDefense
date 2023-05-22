@@ -42,12 +42,13 @@ namespace Code.Enemy
             var enemySettings = enemyCollider.GetComponent<EnemySettings>();
             ref var enemy = ref c_Enemy.Value.Add(entity);
             enemy.NavMeshAgent = enemyCollider.GetComponent<NavMeshAgent>();
-            enemy.EnemyGameObject = enemyCollider.gameObject;
+            enemy.EnemyGameObject = enemyCollider;
             enemy.TargetMove = _heroSettings.Value.gameObject;
             enemy.Distance = enemySettings.Distance;
             enemy.CooldownAttack = enemySettings.CooldownAttack;
             enemy.Speed = enemySettings.Speed;
-            enemy.HP = enemySettings.HP;
+            enemy.DefaultHP = enemySettings.HP;
+            enemy.CurrentHP = enemySettings.HP;
             enemy.States = EnemyStates.Idle;
             
             ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);

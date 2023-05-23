@@ -99,6 +99,8 @@ namespace Code.Main
                 .Add(new s_GroundChecker())
                 .Add(new s_ChangerStateEnemies())
                 .Add(new s_EnemiesSpawner())
+                .Add(new s_EnemyMove())
+                .Add(new EnemyAttack())
                 .Add(new s_HeroShooting())
                 .Add(new s_BulletLifeCycle())
                 .Add(new s_BulletCollision())
@@ -106,8 +108,8 @@ namespace Code.Main
                 .Add(new s_HitHandling());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new s_HeroMove())
-                .Add(new s_EnemyMove());
+                .Add(new s_HeroMove());
+            //.Add(new s_EnemyMove());
         }
 
         private void OnDestroy()

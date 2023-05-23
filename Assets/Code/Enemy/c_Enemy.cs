@@ -11,8 +11,12 @@ namespace Code.Enemy
         public NavMeshAgent NavMeshAgent;
         public GameObject TargetMove;
         public EnemyStates States;
-        public float CooldownAttack;
-        public float Distance;
+        public bool IsReadyAttack;
+        public float DefaultReloadTime;
+        public float CurrentReloadTime;
+        public float CurrentDistance;
+        public float DetectionDistance;
+        public float AttackDistance;
         public float Speed;
         public int DefaultHP;
         public int CurrentHP;

@@ -44,8 +44,9 @@ namespace Code.Enemy
             enemy.NavMeshAgent = enemyCollider.GetComponent<NavMeshAgent>();
             enemy.EnemyGameObject = enemyCollider;
             enemy.TargetMove = _heroSettings.Value.gameObject;
-            enemy.Distance = enemySettings.Distance;
-            enemy.CooldownAttack = enemySettings.CooldownAttack;
+            enemy.DetectionDistance = enemySettings.DetectionDistance;
+            enemy.DefaultReloadTime = enemySettings.CooldownAttack;
+            enemy.AttackDistance = enemySettings.AttackDistance;
             enemy.Speed = enemySettings.Speed;
             enemy.DefaultHP = enemySettings.HP;
             enemy.CurrentHP = enemySettings.HP;

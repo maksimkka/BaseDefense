@@ -36,30 +36,8 @@ namespace Code.Enemy
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
                 enemy.IsHeroOnBase = isHeroOnBase;
-                // if (enemy.EnemyGameObject.gameObject.activeSelf)
-                // {
-                //     enemy.NavMeshAgent.isStopped = isStopped;
-                //
-                //     enemy.HeroAnimation.PlayAnimation(isStopped ? enemy.IdleAnimationHash : enemy.RunAnimationHash);
-                // }
-                // enemy.States = state;
             }
         }
-
-        // private void SwitchState(bool isStopped)
-        // {
-        //     foreach (var entity in _enemyFilter.Value)
-        //     {
-        //         ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
-        //         if (enemy.EnemyGameObject.gameObject.activeSelf)
-        //         {
-        //             enemy.NavMeshAgent.isStopped = isStopped;
-        //
-        //             enemy.HeroAnimation.PlayAnimation(isStopped ? enemy.IdleAnimationHash : enemy.RunAnimationHash);
-        //         }
-        //         enemy.States = state;
-        //     }
-        // }
 
         private void CheckDistance()
         {
@@ -75,9 +53,8 @@ namespace Code.Enemy
                     {
                         enemy.States = EnemyStates.Idle;
                         _heroDetectedMarker.Value.Del(entity);
-                        enemy.HeroAnimation.PlayAnimation(enemy.IdleAnimationHash);
+                        enemy.AnimationSwitcher.PlayAnimation(enemy.IdleAnimationHash);
                         ChangeNavMeshState(ref enemy, true);
-                        $"123123123123".Colored(Color.yellow).Log();
                         enemy.IsReadyAttack = false;
                         enemy.CurrentReloadTime = 0;
                     }
@@ -89,30 +66,10 @@ namespace Code.Enemy
                     {
                         _heroDetectedMarker.Value.Add(entity);
                         enemy.States = EnemyStates.Run;
-                        enemy.HeroAnimation.PlayAnimation(enemy.RunAnimationHash);
+                        enemy.AnimationSwitcher.PlayAnimation(enemy.RunAnimationHash);
                         ChangeNavMeshState(ref enemy, false);
                     }
                 }
-                
-                
-                //if (distance <= enemy.DetectionDistance && enemy.States != EnemyStates.Idle)
-                //{
-                    // if (!_heroDetectedMarker.Value.Has(entity))
-                    // {
-                    //     _heroDetectedMarker.Value.Add(entity);
-                    // }
-                    //enemy.HeroAnimation.PlayAnimation(enemy.RunAnimationHash);
-                //}
-                //else
-                //{
-                    // if (_heroDetectedMarker.Value.Has(entity))
-                    // {
-                    //     _heroDetectedMarker.Value.Del(entity);
-                    // }
-                    // enemy.IsReadyAttack = false;
-                    // enemy.CurrentReloadTime = 0;
-                    //enemy.HeroAnimation.PlayAnimation(enemy.RunAnimationHash);
-                //}
             }
         }
 
@@ -121,19 +78,6 @@ namespace Code.Enemy
             if (enemy.EnemyGameObject.gameObject.activeSelf)
             {
                 enemy.NavMeshAgent.isStopped = isStopped;
-            }
-            
-        }
-
-        private void AddOrDeleteHeroDetectorMarker(int entity)
-        {
-            if (!_heroDetectedMarker.Value.Has(entity))
-            {
-                _heroDetectedMarker.Value.Add(entity);
-            }
-            else
-            {
-                _heroDetectedMarker.Value.Del(entity);
             }
         }
     }

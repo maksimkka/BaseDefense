@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Code.Bullet;
 using Code.Enemy;
+using Code.Game.HealthBar;
 using Code.Ground;
 using Code.Hero;
 using Code.Spawner;
@@ -60,13 +61,14 @@ namespace Code.Main
             var joystick = FindObjectOfType<FloatingJoystick>(true);
             var spawnerSettings = FindObjectOfType<EnemySpawnerSettings>(true);
             var WeaponSettings = FindObjectOfType<WeaponSettings>(true);
+            var healthBarView = FindObjectOfType<HealthBarView>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
             var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
             foreach (var system in _systems)
             {
                 system.Value
-                    .Inject(heroSettings, joystick, enemySettings, groundSettings, spawnerSettings, WeaponSettings);
+                    .Inject(heroSettings, joystick, enemySettings, groundSettings, spawnerSettings, WeaponSettings, healthBarView);
             }
         }
 
@@ -88,11 +90,12 @@ namespace Code.Main
         private void AddGameSystems()
         {
             _systems[SystemType.Init]
+                .Add(new i_HealthBar())
                 .Add(new i_EnemySpawner())
                 .Add(new i_HeroWeapon())
                 .Add(new i_Bullet())
-                .Add(new i_Hero())
-                .Add(new i_Enemy())
+                .Add(new i_Hero(_tokenSources))
+                .Add(new i_Enemy(_tokenSources))
                 .Add(new i_Ground());
 
             _systems[SystemType.Update]
@@ -105,11 +108,12 @@ namespace Code.Main
                 .Add(new s_BulletLifeCycle())
                 .Add(new s_BulletCollision())
                 .Add(new s_ReturnerBulletToPool())
-                .Add(new s_HitHandling());
+                .Add(new s_HitHandling())
+                .Add(new HeroDamageHandler());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new s_HeroMove());
-            //.Add(new s_EnemyMove());
+                .Add(new s_HeroMove())
+                .Add(new s_HealthBarMove());
         }
 
         private void OnDestroy()

@@ -68,12 +68,12 @@ namespace Code.Hero
                         heroData.HeroRigidBody.velocity.z));
                     AddShootMarker(false);
 
-                    heroData.HeroAnimator.PlayAnimation(heroData.RunAnimationHash);
+                    heroData.Animator.PlayAnimation(heroData.RunAnimationHash);
                 }
 
                 else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
                 {
-                    heroData.HeroAnimator.PlayAnimation(heroData.IdleAnimationHash);
+                    heroData.Animator.PlayAnimation(heroData.IdleAnimationHash);
                 }
             }
 
@@ -90,16 +90,16 @@ namespace Code.Hero
                     heroData.HeroGameObject.transform.eulerAngles.y, 
                     originalRotation.z);
                 AddShootMarker(true);
-                
-                if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
-                {
-                    heroData.HeroAnimator.PlayAnimation(heroData.RiffleWalkAnimationHash);
-                }
-                else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
-                {
-                    heroData.HeroAnimator.PlayAnimation(heroData.RiffleIdleAnimation);
-                }
-                
+                ChangeAnimation(ref heroData);
+                // if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
+                // {
+                //     heroData.Animator.PlayAnimation(heroData.RiffleWalkAnimationHash);
+                // }
+                // else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
+                // {
+                //     heroData.Animator.PlayAnimation(heroData.RiffleIdleAnimation);
+                // }
+
             }
         }
 
@@ -119,18 +119,16 @@ namespace Code.Hero
             }
         }
 
-        // private void ChangeAnimation(ref c_HeroData heroData)
-        // {
-        //     $"{heroData.HeroRigidBody.velocity}".Colored(Color.cyan).Log();
-        //     if (heroData.HeroRigidBody.velocity == Vector3.zero)
-        //     {
-        //         heroData.HeroAnimator.IdleAnimation();
-        //     }
-        //
-        //     else
-        //     {
-        //         heroData.HeroAnimator.RunAnimation();
-        //     }
-        // }
+        private void ChangeAnimation(ref c_HeroData heroData)
+        {
+            if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
+            {
+                heroData.Animator.PlayAnimation(heroData.RiffleWalkAnimationHash);
+            }
+            else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
+            {
+                heroData.Animator.PlayAnimation(heroData.RiffleIdleAnimation);
+            }
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using Code.Logger;
-using Cysharp.Threading.Tasks;
+﻿using Code.Hero;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -10,6 +8,8 @@ namespace Code.Enemy
     public class EnemyAttack : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_Enemy, HeroDetectedMarker>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
+        private readonly EcsPoolInject<SubmitDamageRequest> SubmitDamageRequest;
 
         public void Run(IEcsSystems systems)
         {
@@ -39,12 +39,26 @@ namespace Code.Enemy
             {
                 if (enemyData.IsReadyAttack)
                 {
-                    "YEBAL".Colored(Color.cyan).Log();
-                    
-                    enemyData.HeroAnimation.GetTimeAnimation(enemyData.ThrowAnimationHash, enemyData.RunAnimationHash);
+                    enemyData.AnimationSwitcher.GetTimeAnimation(enemyData.ThrowAnimationHash, enemyData.RunAnimationHash);
                     enemyData.IsReadyAttack = false;
                     enemyData.CurrentReloadTime = 0;
+                    SendRequest(enemyData.Damage);
                 }
+            }
+        }
+
+        private void SendRequest(int damageDone)
+        {
+            foreach (var entity in _heroFilter.Value)
+            {
+                if (!SubmitDamageRequest.Value.Has(entity))
+                {
+                    SubmitDamageRequest.Value.Add(entity);
+                }
+
+                ref var submitDamageRequest = ref SubmitDamageRequest.Value.Get(entity);
+                submitDamageRequest.DamageDone = damageDone;
+                submitDamageRequest.QueueForDamage++;
             }
         }
     }

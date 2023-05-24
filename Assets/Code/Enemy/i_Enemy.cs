@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Code.Hero;
 using Code.Logger;
 using Code.Pools;
@@ -21,6 +22,13 @@ namespace Code.Enemy
         private readonly int _idleAnimation = Animator.StringToHash("DynIdle");
         private readonly int _runAnimation = Animator.StringToHash("Running");
         private readonly int _throwAnimation = Animator.StringToHash("Throw");
+        
+        private readonly CancellationTokenSource _tokenSources;
+
+        public i_Enemy(CancellationTokenSource tokenSource)
+        {
+            _tokenSources = tokenSource;
+        }
         
         private IEcsSystems _system;
 
@@ -54,8 +62,9 @@ namespace Code.Enemy
             enemy.Speed = enemySettings.Speed;
             enemy.DefaultHP = enemySettings.HP;
             enemy.CurrentHP = enemySettings.HP;
+            enemy.Damage = enemySettings.Damage;
             enemy.States = EnemyStates.Idle;
-            enemy.HeroAnimation = new HeroAnimation(animator);
+            enemy.AnimationSwitcher = new AnimationSwitcher(animator, _tokenSources);
             enemy.IdleAnimationHash = _idleAnimation;
             enemy.RunAnimationHash = _runAnimation;
             enemy.ThrowAnimationHash = _throwAnimation;

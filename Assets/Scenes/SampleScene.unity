@@ -2212,6 +2212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VoodooCustomCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 3812979063943542723, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3812979063943542732, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2256,6 +2260,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3812979064266422577, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3da1af9f89731c84ba8ebf3bfdd3c9a8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
 --- !u!4 &2614242616292078728 stripped

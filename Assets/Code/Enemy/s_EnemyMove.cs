@@ -25,26 +25,28 @@ namespace Code.Enemy
         {
             if(enemy.States == EnemyStates.Idle) return;
             //if(!IsCheckDistance(ref enemy)) return;
-            var distance = Vector3.Distance(enemy.EnemyGameObject.transform.position, enemy.TargetMove.transform.position);
+            //var distance = Vector3.Distance(enemy.EnemyGameObject.transform.position, enemy.TargetMove.transform.position);
 
-            if (distance <= enemy.DetectionDistance)
-            {
-                if (!_heroDetectedMarker.Value.Has(enemyEntity))
-                {
-                    _heroDetectedMarker.Value.Add(enemyEntity);
-                }
-                enemy.CurrentDistance = distance;
+            //if (distance <= enemy.DetectionDistance)
+            //{
+            //    if (!_heroDetectedMarker.Value.Has(enemyEntity))
+                //{
+                    //_heroDetectedMarker.Value.Add(enemyEntity);
+            //    }
+                //enemy.CurrentDistance = distance;
+                //enemy.HeroAnimation.PlayAnimation(enemy.RunAnimationHash);
                 enemy.NavMeshAgent.SetDestination(enemy.TargetMove.transform.position);
-            }
-            else
-            {
-                if (_heroDetectedMarker.Value.Has(enemyEntity))
-                {
-                    _heroDetectedMarker.Value.Del(enemyEntity);
-                }
-                enemy.IsReadyAttack = false;
-                enemy.CurrentReloadTime = 0;
-            }
+            //}
+            //else
+            //{
+                // if (_heroDetectedMarker.Value.Has(enemyEntity))
+                // {
+                //     _heroDetectedMarker.Value.Del(enemyEntity);
+                // }
+                // enemy.IsReadyAttack = false;
+                // enemy.CurrentReloadTime = 0;
+                ///enemy.HeroAnimation.PlayAnimation(enemy.RunAnimationHash);
+            //}
         }
 
         // private float IsCheckDistance(ref c_Enemy enemy)

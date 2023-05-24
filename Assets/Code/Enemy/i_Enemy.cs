@@ -15,10 +15,13 @@ namespace Code.Enemy
     {
         private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _enemySpawnerFilter = default;
         private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> UnityPhysicsCollisionDataComponent = default;
-
         private readonly EcsPoolInject<c_Enemy> c_Enemy = default;
-        
         private readonly EcsCustomInject<HeroSettings> _heroSettings = default;
+        
+        private readonly int _idleAnimation = Animator.StringToHash("DynIdle");
+        private readonly int _runAnimation = Animator.StringToHash("Running");
+        private readonly int _throwAnimation = Animator.StringToHash("Throw");
+        
         private IEcsSystems _system;
 
         public void Init(IEcsSystems systems)
@@ -40,6 +43,7 @@ namespace Code.Enemy
         {
             var entity = _system.GetWorld().NewEntity();
             var enemySettings = enemyCollider.GetComponent<EnemySettings>();
+            var animator = enemySettings.GetComponentInChildren<Animator>();
             ref var enemy = ref c_Enemy.Value.Add(entity);
             enemy.NavMeshAgent = enemyCollider.GetComponent<NavMeshAgent>();
             enemy.EnemyGameObject = enemyCollider;
@@ -51,6 +55,10 @@ namespace Code.Enemy
             enemy.DefaultHP = enemySettings.HP;
             enemy.CurrentHP = enemySettings.HP;
             enemy.States = EnemyStates.Idle;
+            enemy.HeroAnimation = new HeroAnimation(animator);
+            enemy.IdleAnimationHash = _idleAnimation;
+            enemy.RunAnimationHash = _runAnimation;
+            enemy.ThrowAnimationHash = _throwAnimation;
             
             ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
             unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();

@@ -1,4 +1,6 @@
-﻿using Code.Logger;
+﻿using System;
+using Code.Logger;
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -38,6 +40,8 @@ namespace Code.Enemy
                 if (enemyData.IsReadyAttack)
                 {
                     "YEBAL".Colored(Color.cyan).Log();
+                    
+                    enemyData.HeroAnimation.GetTimeAnimation(enemyData.ThrowAnimationHash, enemyData.RunAnimationHash);
                     enemyData.IsReadyAttack = false;
                     enemyData.CurrentReloadTime = 0;
                 }

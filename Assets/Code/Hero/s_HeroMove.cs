@@ -29,8 +29,9 @@ namespace Code.Hero
 
         private void Move(ref c_HeroData heroData)
         {
-            heroData.heroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed,
-                heroData.heroRigidBody.velocity.y, _joystick.Value.Vertical * heroData.Speed);
+            heroData.HeroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed,
+                heroData.HeroRigidBody.velocity.y, _joystick.Value.Vertical * heroData.Speed);
+            
         }
 
         private void IsCheckDistance(ref c_HeroData heroData, ref c_CurrentGroundData currentGroundData)
@@ -62,10 +63,17 @@ namespace Code.Hero
                 if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
                 {
                     heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(new Vector3(
-                        heroData.heroRigidBody.velocity.x, 
+                        heroData.HeroRigidBody.velocity.x, 
                         0,
-                        heroData.heroRigidBody.velocity.z));
+                        heroData.HeroRigidBody.velocity.z));
                     AddShootMarker(false);
+
+                    heroData.HeroAnimator.PlayAnimation(heroData.RunAnimationHash);
+                }
+
+                else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
+                {
+                    heroData.HeroAnimator.PlayAnimation(heroData.IdleAnimationHash);
                 }
             }
 
@@ -82,6 +90,16 @@ namespace Code.Hero
                     heroData.HeroGameObject.transform.eulerAngles.y, 
                     originalRotation.z);
                 AddShootMarker(true);
+                
+                if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
+                {
+                    heroData.HeroAnimator.PlayAnimation(heroData.RiffleWalkAnimationHash);
+                }
+                else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
+                {
+                    heroData.HeroAnimator.PlayAnimation(heroData.RiffleIdleAnimation);
+                }
+                
             }
         }
 
@@ -100,5 +118,19 @@ namespace Code.Hero
                 }
             }
         }
+
+        // private void ChangeAnimation(ref c_HeroData heroData)
+        // {
+        //     $"{heroData.HeroRigidBody.velocity}".Colored(Color.cyan).Log();
+        //     if (heroData.HeroRigidBody.velocity == Vector3.zero)
+        //     {
+        //         heroData.HeroAnimator.IdleAnimation();
+        //     }
+        //
+        //     else
+        //     {
+        //         heroData.HeroAnimator.RunAnimation();
+        //     }
+        // }
     }
 }

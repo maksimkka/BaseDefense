@@ -54,6 +54,7 @@ namespace Code.Hero
             hero.RunAnimationHash = _runAnimation;
             hero.RiffleWalkAnimationHash = _riffleWalkAnimation;
             hero.RiffleIdleAnimation = _riffleIdleAnimation;
+            hero.StartPosition = _heroSettings.Value.HeroStartPosition;
 
             InitHealthBar(ref hero);
             // (RectTransform RectTransform, Slider Slider) valueTuple = healthBar.Health.Peek();

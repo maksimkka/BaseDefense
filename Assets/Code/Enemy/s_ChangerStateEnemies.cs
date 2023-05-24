@@ -1,4 +1,5 @@
-﻿using Code.Ground;
+﻿using Code.EndGame;
+using Code.Ground;
 using Code.Hero;
 using Code.Logger;
 using Leopotam.EcsLite;
@@ -9,8 +10,8 @@ namespace Code.Enemy
 {
     public sealed class s_ChangerStateEnemies : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_CurrentGroundData, r_ChangeGround>> _currentGroundFilter = default;
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_CurrentGroundData, r_ChangeGround>, Exc<EndGameMarker>> _currentGroundFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>, Exc<EndGameMarker>> _enemyFilter = default;
         private readonly EcsPoolInject<HeroDetectedMarker> _heroDetectedMarker = default;
 
         public void Run(IEcsSystems systems)

@@ -1,4 +1,5 @@
-﻿using Code.Hero;
+﻿using Code.EndGame;
+using Code.Hero;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Code.Enemy
 {
     public class EnemyAttack : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_Enemy, HeroDetectedMarker>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy, HeroDetectedMarker>, Exc<EndGameMarker>> _enemyFilter = default;
         private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
         private readonly EcsPoolInject<SubmitDamageRequest> SubmitDamageRequest;
 

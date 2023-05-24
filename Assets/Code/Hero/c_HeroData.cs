@@ -11,6 +11,7 @@ namespace Code.Hero
         public GameObject HealthPosition;
         public Rigidbody HeroRigidBody;
         public Transform TargetRotation;
+        public Transform StartPosition;
         public Slider Slider;
 
         public float Distance;

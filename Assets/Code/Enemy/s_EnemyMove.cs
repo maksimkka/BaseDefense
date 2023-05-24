@@ -1,11 +1,12 @@
-﻿using Leopotam.EcsLite;
+﻿using Code.EndGame;
+using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
 namespace Code.Enemy
 {
     public sealed class s_EnemyMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>, Exc<EndGameMarker>> _enemyFilter = default;
 
         public void Run(IEcsSystems systems)
         {

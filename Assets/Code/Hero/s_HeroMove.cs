@@ -1,4 +1,5 @@
-﻿using Code.Enemy;
+﻿using Code.EndGame;
+using Code.Enemy;
 using Code.Logger;
 using Code.Weapon;
 using Leopotam.EcsLite;
@@ -9,9 +10,9 @@ namespace Code.Hero
 {
     public sealed class s_HeroMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData, c_CurrentGroundData>> _heroFilter = default;
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
-        private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsFilterInject<Inc<c_HeroData, c_CurrentGroundData>, Exc<EndGameMarker>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>, Exc<EndGameMarker>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_WeaponData>, Exc<EndGameMarker>> _weaponFilter = default;
         private readonly EcsPoolInject<m_CanShoot> m_CanShoot = default;
         private readonly EcsCustomInject<FloatingJoystick> _joystick = default;
 
@@ -79,7 +80,7 @@ namespace Code.Hero
 
             else if(heroData.TargetRotation != null)
             {
-                Vector3 originalRotation = heroData.HeroGameObject.transform.eulerAngles;
+                var originalRotation = heroData.HeroGameObject.transform.eulerAngles;
                 heroData.HeroGameObject.transform.LookAt(new Vector3(
                     heroData.TargetRotation.position.x,
                     heroData.HeroGameObject.transform.position.y,
@@ -91,15 +92,6 @@ namespace Code.Hero
                     originalRotation.z);
                 AddShootMarker(true);
                 ChangeAnimation(ref heroData);
-                // if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
-                // {
-                //     heroData.Animator.PlayAnimation(heroData.RiffleWalkAnimationHash);
-                // }
-                // else if(_joystick.Value.Horizontal == 0 && _joystick.Value.Vertical == 0)
-                // {
-                //     heroData.Animator.PlayAnimation(heroData.RiffleIdleAnimation);
-                // }
-
             }
         }
 

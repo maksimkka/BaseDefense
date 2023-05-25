@@ -14,6 +14,7 @@ namespace Code.Hero
         public Slider Slider;
 
         public float Distance;
+        public float BonusSearchRadius;
         public float Speed;
         public int DefaultHP;
         public int CurrentHP;

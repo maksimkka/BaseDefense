@@ -67,7 +67,6 @@ namespace Code.Enemy
             enemy.IdleAnimationHash = _idleAnimation;
             enemy.RunAnimationHash = _runAnimation;
             enemy.ThrowAnimationHash = _throwAnimation;
-            //enemySettings.Entity = entity;
             
             ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
             unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();

@@ -66,7 +66,6 @@ namespace Code.Enemy
                 {
                     if (!_heroDetectedMarker.Value.Has(entity))
                     {
-                        $"{enemy.EnemyGameObject.name}".Colored(Color.cyan).Log();
                         _heroDetectedMarker.Value.Add(entity);
                         enemy.States = EnemyStates.Run;
                         enemy.AnimationSwitcher.PlayAnimation(enemy.RunAnimationHash);

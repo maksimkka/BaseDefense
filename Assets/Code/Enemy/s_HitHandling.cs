@@ -1,5 +1,4 @@
 ﻿using Code.Bonus;
-using Code.Logger;
 using Code.Spawner;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;

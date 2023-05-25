@@ -57,6 +57,7 @@ namespace Code.Hero
             hero.RiffleWalkAnimationHash = _riffleWalkAnimation;
             hero.RiffleIdleAnimation = _riffleIdleAnimation;
             hero.StartPosition = _heroSettings.Value.HeroStartPosition;
+            hero.BonusSearchRadius = _heroSettings.Value.BonusSearchRadius;
 
             InitHealthBar(ref hero);
         }
@@ -87,9 +88,10 @@ namespace Code.Hero
         {
             ref var inventoryData = ref _inventoryData.Value.Add(entity);
             inventoryData.InventoryObject = _inventorySettings.Value.gameObject.transform;
-            inventoryData.CurrentPosition = inventoryData.InventoryObject.position;
+            inventoryData.CurrentPosition = inventoryData.InventoryObject;
             inventoryData.MaxStackSize = _inventorySettings.Value.MaxStackSize;
             inventoryData.OffsetPosition = _inventorySettings.Value.OffsetPosition;
+            inventoryData.StackInventory = new List<GameObject>();
         }
     }
 }

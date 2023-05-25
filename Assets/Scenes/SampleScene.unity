@@ -3033,7 +3033,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: <HP>k__BackingField
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: <Distance>k__BackingField
@@ -3043,6 +3043,10 @@ PrefabInstance:
       propertyPath: <HealthPosition>k__BackingField
       value: 
       objectReference: {fileID: 1652328773}
+    - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: <BonusSearchRadius>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: <HeroStartPosition>k__BackingField
       value: 

@@ -121,7 +121,8 @@ namespace Code.Main
                 .Add(new s_ReturnerBulletToPool())
                 .Add(new s_HitHandling())
                 .Add(new ManagingBonusPool())
-                .Add(new HeroDamageHandler());
+                .Add(new HeroDamageHandler())
+                .Add(new BonusCollector());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

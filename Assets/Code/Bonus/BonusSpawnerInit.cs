@@ -48,6 +48,7 @@ namespace Code.Bonus
             bonusSettings.BonusEntity = entity;
             bonusData.BonusType = bonusSettings.BonusType;
             bonusData.BonusGameObject = bonusSettings.gameObject;
+            bonusData.BonusRigidbody = bonusSettings.gameObject.GetComponent<Rigidbody>();
             bonusData.BonusValue = bonusSettings.BonusValue;
         }
     }

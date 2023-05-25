@@ -67,7 +67,6 @@ namespace Code.Hero
                         heroData.HeroRigidBody.velocity.x, 
                         0,
                         heroData.HeroRigidBody.velocity.z));
-                    // AddShootMarker(false);
 
                     heroData.Animator.PlayAnimation(heroData.RunAnimationHash);
                 }

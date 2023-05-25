@@ -83,7 +83,7 @@ MonoBehaviour:
   <DetectionDistance>k__BackingField: 10
   <AttackDistance>k__BackingField: 2
   <CooldownAttack>k__BackingField: 3
-  <HP>k__BackingField: 100
+  <HP>k__BackingField: 25
   <Damage>k__BackingField: 2
 --- !u!195 &7091965470037638033
 NavMeshAgent:

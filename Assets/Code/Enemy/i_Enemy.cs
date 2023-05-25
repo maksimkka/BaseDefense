@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Code.Hero;
-using Code.Logger;
 using Code.Pools;
 using Code.Spawner;
 using Code.UnityPhysics;
@@ -68,6 +67,7 @@ namespace Code.Enemy
             enemy.IdleAnimationHash = _idleAnimation;
             enemy.RunAnimationHash = _runAnimation;
             enemy.ThrowAnimationHash = _throwAnimation;
+            //enemySettings.Entity = entity;
             
             ref var unityPhysicsCollisionDataComponent = ref UnityPhysicsCollisionDataComponent.Value.Add(entity);
             unityPhysicsCollisionDataComponent.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();

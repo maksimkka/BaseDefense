@@ -1,4 +1,5 @@
-﻿using Code.Pools;
+﻿using Code.Enemy;
+using Code.Pools;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Code.Spawner
     public sealed class s_EnemiesSpawner : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _filterSpawnEnemy = default;
+        private readonly EcsPoolInject<c_Enemy> _enemyData = default;
         private float timerElapsed;
         
         public void Run(IEcsSystems systems)
@@ -26,13 +28,14 @@ namespace Code.Spawner
 
             if (!(timerElapsed >= enemySpawnData.SpawnDelay)) return;
             timerElapsed = 0;
-            SpawnObjects(enemySpawnData.EnemyPool, enemySpawnData.PlaceSpawnObject, ref enemySpawnData.CountSpawnEnemies);
+            SpawnObjects(enemySpawnData.EnemyPool, enemySpawnData.PlaceSpawnObject,
+                ref enemySpawnData.CountSpawnEnemies, enemySpawnData.SpawnerObject.transform);
         }
         
-        private void SpawnObjects(ObjectPool<Collider> enemiesPool, MeshRenderer plane, ref int CountSpawnEnemies)
+        private void SpawnObjects(ObjectPool<Collider> enemiesPool, MeshRenderer plane, ref int CountSpawnEnemies, Transform parentObject)
         {
             var spawnPosition = GetRandomSpawnPosition(plane);
-            enemiesPool.GetObject(spawnPosition, Quaternion.identity);
+            enemiesPool.GetObject(spawnPosition, Quaternion.identity, parentObject);
             CountSpawnEnemies++;
         }
 

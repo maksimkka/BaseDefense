@@ -45,6 +45,7 @@ namespace Code.Enemy
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
+                if(!enemy.EnemyGameObject.gameObject.activeSelf) continue;
                 var distance = Vector3.Distance(enemy.EnemyGameObject.transform.position, enemy.TargetMove.transform.position);
                 enemy.CurrentDistance = distance;
 
@@ -65,6 +66,7 @@ namespace Code.Enemy
                 {
                     if (!_heroDetectedMarker.Value.Has(entity))
                     {
+                        $"{enemy.EnemyGameObject.name}".Colored(Color.cyan).Log();
                         _heroDetectedMarker.Value.Add(entity);
                         enemy.States = EnemyStates.Run;
                         enemy.AnimationSwitcher.PlayAnimation(enemy.RunAnimationHash);

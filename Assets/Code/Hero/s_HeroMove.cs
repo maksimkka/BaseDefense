@@ -44,15 +44,14 @@ namespace Code.Hero
             {
                 ref var enemy = ref _enemyFilter.Pools.Inc1.Get(enemyEntity);
                 if (!enemy.EnemyGameObject.gameObject.activeSelf) continue;
-                
                 var distance = Vector3.Distance(heroData.HeroGameObject.transform.position,
                     enemy.EnemyGameObject.transform.position);
 
                 if (!currentGroundData.IsBaseGround && distance < closestDistance && distance <= heroData.Distance)
                 {
+                    // $"{enemy.EnemyGameObject.gameObject.GetHashCode()} ____ {distance} ____ {heroData.Distance}".Colored(Color.cyan).Log();
                     closestDistance = distance;
                     heroData.TargetRotation = enemy.EnemyGameObject.transform;
-                    
                 }
             }
         }
@@ -61,13 +60,14 @@ namespace Code.Hero
         {
             if (heroData.TargetRotation == null)
             {
+                AddShootMarker(false);
                 if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
                 {
                     heroData.HeroGameObject.transform.rotation = Quaternion.LookRotation(new Vector3(
                         heroData.HeroRigidBody.velocity.x, 
                         0,
                         heroData.HeroRigidBody.velocity.z));
-                    AddShootMarker(false);
+                    // AddShootMarker(false);
 
                     heroData.Animator.PlayAnimation(heroData.RunAnimationHash);
                 }

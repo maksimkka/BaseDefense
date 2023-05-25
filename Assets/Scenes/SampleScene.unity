@@ -916,6 +916,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510994772}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &534229553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534229554}
+  - component: {fileID: 534229555}
+  m_Layer: 0
+  m_Name: Bonuses
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534229554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534229553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &534229555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534229553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfa174699ad4df99134d2789dafd656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <RegularBonusPrefab>k__BackingField: {fileID: 4628825272893010149, guid: 0d2ce8ea964b31d408e385ec0bc8d96c, type: 3}
+  <MegaBonusPrefab>k__BackingField: {fileID: 1539152634887727375, guid: 06f118912c3e5974088130d59c3c545b, type: 3}
+  <StartSizeRegularBonusPool>k__BackingField: 50
+  <StartSizeMegaBonusPool>k__BackingField: 50
+  <SpawnProbabilityRegularBonus>k__BackingField: 0.7
 --- !u!1 &602742095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,6 +1911,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94ba9cf514744bea0672d5cc5342d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1494220101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1494220102}
+  - component: {fileID: 1494220103}
+  m_Layer: 10
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1494220102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494220101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -0.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2614242616292078728}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1494220103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494220101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217b9b3e001943f99f7bb5d1800cdd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxStackSize>k__BackingField: 15
+  <OffsetPosition>k__BackingField: 0.2
 --- !u!1 &1632598489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2393,8 +2488,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06825554
-  m_Center: {x: 0, y: 0.3206069, z: 0}
+  m_Radius: 0.006498575
+  m_Center: {x: 0, y: 0.32080728, z: 0}
 --- !u!114 &1964714849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2469,9 +2564,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <EnemyPrefab>k__BackingField: {fileID: 1719840728106253559, guid: ff629084c5edc5e46a46682e21425807, type: 3}
   <PlaneSpawnObject>k__BackingField: {fileID: 1893192835}
-  <SpawnDelay>k__BackingField: 2
-  <PoolSize>k__BackingField: 15
-  <MaxSpawn>k__BackingField: 4
+  <SpawnDelay>k__BackingField: 1
+  <PoolSize>k__BackingField: 30
+  <MaxSpawn>k__BackingField: 20
 --- !u!1 &1997851585
 GameObject:
   m_ObjectHideFlags: 0

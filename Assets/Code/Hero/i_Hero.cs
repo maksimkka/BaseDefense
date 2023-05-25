@@ -15,8 +15,10 @@ namespace Code.Hero
         private readonly EcsPoolInject<c_HeroData> c_Hero = default;
         private readonly EcsPoolInject<c_CurrentGroundData> c_CurrentGroundData = default;
         private readonly EcsPoolInject<c_HealthBarData> c_HealthBarData = default;
+        private readonly EcsPoolInject<InventoryData> _inventoryData = default;
         private readonly EcsPoolInject<UnityPhysicsCollisionDataComponent> c_UnityPhysicsCollisionDataComponent = default;
         private readonly EcsCustomInject<HeroSettings> _heroSettings = default;
+        private readonly EcsCustomInject<InventorySettings> _inventorySettings = default;
         
         private readonly int _idleAnimation = Animator.StringToHash("DynIdle");
         private readonly int _runAnimation = Animator.StringToHash("Running");
@@ -40,7 +42,7 @@ namespace Code.Hero
             c_collisionData.CollisionsEnter = new Queue<(int layer, UnityPhysicsCollisionDTO collisionDTO)>();
 
             var heroAnimator = _heroSettings.Value.GetComponentInChildren<Animator>();
-
+            InitInventory(entity);
             ref var hero = ref c_Hero.Value.Add(entity);
             hero.Animator = new AnimationSwitcher(heroAnimator, _tokenSources);
             hero.HeroGameObject = _heroSettings.Value.gameObject;
@@ -79,6 +81,15 @@ namespace Code.Hero
                 valueTuple.RectTransform.gameObject.SetActive(true);
             }
             
+        }
+
+        private void InitInventory(int entity)
+        {
+            ref var inventoryData = ref _inventoryData.Value.Add(entity);
+            inventoryData.InventoryObject = _inventorySettings.Value.gameObject.transform;
+            inventoryData.CurrentPosition = inventoryData.InventoryObject.position;
+            inventoryData.MaxStackSize = _inventorySettings.Value.MaxStackSize;
+            inventoryData.OffsetPosition = _inventorySettings.Value.OffsetPosition;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Code.Bonus;
 using Code.Bullet;
 using Code.Enemy;
 using Code.Game.HealthBar;
@@ -62,8 +63,10 @@ namespace Code.Main
             var heroSettings = FindObjectOfType<HeroSettings>(true);
             var joystick = FindObjectOfType<FloatingJoystick>(true);
             var spawnerSettings = FindObjectOfType<EnemySpawnerSettings>(true);
+            var bonusesPoolSettings = FindObjectOfType<BonusesPoolSettings>(true);
             var WeaponSettings = FindObjectOfType<WeaponSettings>(true);
             var healthBarView = FindObjectOfType<HealthBarView>(true);
+            var inventorySettings = FindObjectOfType<InventorySettings>(true);
             var restartButtonView = FindObjectOfType<RestartScreenView>(true);
             var menuSettings = FindObjectOfType<HUDSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
@@ -71,9 +74,9 @@ namespace Code.Main
 
             foreach (var system in _systems)
             {
-                system.Value
-                    .Inject(heroSettings, joystick, enemySettings, groundSettings,
-                        spawnerSettings, WeaponSettings, healthBarView, restartButtonView, menuSettings);
+                system.Value.Inject(heroSettings, joystick, enemySettings, groundSettings,
+                        spawnerSettings, WeaponSettings, healthBarView, restartButtonView,
+                        menuSettings, bonusesPoolSettings, inventorySettings);
             }
         }
 
@@ -98,6 +101,7 @@ namespace Code.Main
                 .Add(new RestartGame())
                 .Add(new PauseInit())
                 .Add(new i_HealthBar())
+                .Add(new BonusSpawnerInit())
                 .Add(new i_EnemySpawner())
                 .Add(new i_HeroWeapon())
                 .Add(new i_Bullet())
@@ -116,6 +120,7 @@ namespace Code.Main
                 .Add(new s_BulletCollision())
                 .Add(new s_ReturnerBulletToPool())
                 .Add(new s_HitHandling())
+                .Add(new ManagingBonusPool())
                 .Add(new HeroDamageHandler());
 
             _systems[SystemType.FixedUpdate]

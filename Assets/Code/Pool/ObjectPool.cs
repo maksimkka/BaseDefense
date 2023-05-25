@@ -12,29 +12,33 @@ namespace Code.Pools
         private readonly Transform parentTransform;
         private readonly Action<T> _initWithInECS;
         private const int RefillCount = 15;
-
+        private int countObject;
         public ObjectPool(T prefab, Transform parentTransform, int initialSize = 10, Action<T> initWithInEcs = null)
         {
+            countObject = 0;
             this.prefab = prefab;
             this.parentTransform = parentTransform;
             _initWithInECS = initWithInEcs;
 
             objectPool = new Queue<T>(initialSize);
-            FillPool(initialSize);
+            FillPool(initialSize, parentTransform);
         }
         
-        private void FillPool(int fillCount)
+        private void FillPool(int fillCount, Transform parentObject = null)
         {
             for (int i = 0; i < fillCount; i++)
             {
+                countObject++;
                 T obj = Object.Instantiate(prefab, parentTransform);
+                obj.name = prefab.name +  countObject;
+                //obj.name += countObject;
                 _initWithInECS?.Invoke(obj);
-
-                ReturnObject(obj);
+                
+                ReturnObject(obj, parentObject);
             }
         }
 
-        public T GetObject(Vector3 position, Quaternion rotation)
+        public T GetObject(Vector3 position, Quaternion rotation, Transform parentObject = null)
         {
             if (objectPool.Count <= 0)
             {
@@ -42,6 +46,7 @@ namespace Code.Pools
             }
 
             var obj = objectPool.Dequeue();
+            obj.gameObject.transform.parent = parentObject;
             var newGameObjectTransform = obj.transform;
             newGameObjectTransform.position = position;
             newGameObjectTransform.rotation = rotation;
@@ -49,8 +54,9 @@ namespace Code.Pools
             return obj;
         }
 
-        public void ReturnObject(T obj)
+        public void ReturnObject(T obj, Transform parentObject = null)
         {
+            obj.gameObject.transform.parent = parentObject;
             obj.gameObject.SetActive(false);
             objectPool.Enqueue(obj);
         }

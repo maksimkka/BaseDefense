@@ -17,6 +17,7 @@ namespace Code.Enemy
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemyData = ref _enemyFilter.Pools.Inc1.Get(entity);
+                if(!enemyData.EnemyGameObject.gameObject.activeSelf) continue;
                 Reload(ref enemyData);
                 Attack(ref enemyData);
             }

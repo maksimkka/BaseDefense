@@ -141,4 +141,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DefaultLifeTime>k__BackingField: 3
-  <Damage>k__BackingField: 1
+  <Damage>k__BackingField: 5

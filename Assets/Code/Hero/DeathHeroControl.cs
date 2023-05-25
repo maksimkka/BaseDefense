@@ -19,8 +19,8 @@ namespace Code.Hero
         {
             foreach (var entity in _heroDiedFilter.Value)
             {
-                var endGameEntity = systems.GetWorld().NewEntity();
-                NotifyTheDeathOfPlayer(endGameEntity);
+                // var endGameEntity = systems.GetWorld().NewEntity();
+                // NotifyTheDeathOfPlayer(endGameEntity);
             }
         }
 

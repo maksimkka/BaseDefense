@@ -976,7 +976,6 @@ GameObject:
   - component: {fileID: 648141645}
   - component: {fileID: 648141644}
   - component: {fileID: 648141643}
-  - component: {fileID: 648141642}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -1005,19 +1004,6 @@ RectTransform:
   m_AnchoredPosition: {x: -455, y: 886}
   m_SizeDelta: {x: 132.1404, y: 94.0677}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &648141642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648141640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83c25a1333749199993a1506fdee1d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RestartPanel: {fileID: 501560498}
 --- !u!114 &648141643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,7 +1741,7 @@ GameObject:
   - component: {fileID: 1479288764}
   - component: {fileID: 1479288767}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2596,6 +2582,7 @@ GameObject:
   - component: {fileID: 2005781386}
   - component: {fileID: 2005781385}
   - component: {fileID: 2005781384}
+  - component: {fileID: 2005781388}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -2687,6 +2674,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2005781388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005781383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c83c25a1333749199993a1506fdee1d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <OpenMenuButton>k__BackingField: {fileID: 648141643}
+  <RestartScreen>k__BackingField: {fileID: 501560498}
+  <GameScreen>k__BackingField: {fileID: 1261690340}
 --- !u!1 &2018653901
 GameObject:
   m_ObjectHideFlags: 0

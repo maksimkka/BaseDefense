@@ -30,7 +30,6 @@ namespace Code.Hero
         }
         public void Init(IEcsSystems systems)
         {
-            // ref var healthBar = ref systems.GetWorld().GetPool<c_HealthBar>().Get(-1);
             var entity = systems.GetWorld().NewEntity();
             ref var currentGroundData = ref c_CurrentGroundData.Value.Add(entity);
             currentGroundData.IsBaseGround = true;
@@ -49,6 +48,7 @@ namespace Code.Hero
             hero.HealthPosition = _heroSettings.Value.HealthPosition;
             hero.Speed = _heroSettings.Value.Speed;
             hero.CurrentHP = _heroSettings.Value.HP;
+            hero.DefaultHP = _heroSettings.Value.HP;
             hero.Distance = _heroSettings.Value.Distance;
             hero.IdleAnimationHash = _idleAnimation;
             hero.RunAnimationHash = _runAnimation;
@@ -57,18 +57,6 @@ namespace Code.Hero
             hero.StartPosition = _heroSettings.Value.HeroStartPosition;
 
             InitHealthBar(ref hero);
-            // (RectTransform RectTransform, Slider Slider) valueTuple = healthBar.Health.Peek();
-            // healthBar.Health.Dequeue();
-
-            // hero.Slider = valueTuple.Slider;
-            // hero.Slider.maxValue = hero.CurrentHP;
-            // hero.Slider.value = hero.CurrentHP;
-            // ref var c_healthBarData = ref c_HealthBarData.Value.Add(entity);
-            //
-            // c_healthBarData.RectTransform = valueTuple.RectTransform;
-            // c_healthBarData.GameObject = hero.HealthPosition;
-            //     
-            // valueTuple.RectTransform.gameObject.SetActive(true);
         }
 
         private void InitHealthBar(ref c_HeroData heroData)

@@ -1,4 +1,5 @@
 ﻿using Code.Bullet;
+using Code.EndGame;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Code.Weapon
 {
     public sealed class s_HeroShooting : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_WeaponData, m_CanShoot>> _weaponFilter = default;
+        private readonly EcsFilterInject<Inc<c_WeaponData, m_CanShoot>, Exc<EndGameMarker>> _weaponFilter = default;
         private readonly EcsPoolInject<c_BulletData> c_BulletData = default;
 
         private float _currentReloadTime;

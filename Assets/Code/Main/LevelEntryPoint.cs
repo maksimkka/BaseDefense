@@ -7,6 +7,7 @@ using Code.Game.HealthBar;
 using Code.Ground;
 using Code.Hero;
 using Code.Spawner;
+using Code.UI;
 using Code.UI.Restart;
 using Code.Weapon;
 using Leopotam.EcsLite;
@@ -64,6 +65,7 @@ namespace Code.Main
             var WeaponSettings = FindObjectOfType<WeaponSettings>(true);
             var healthBarView = FindObjectOfType<HealthBarView>(true);
             var restartButtonView = FindObjectOfType<RestartScreenView>(true);
+            var menuSettings = FindObjectOfType<HUDSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
             var groundSettings = FindObjectsOfType<GroundSettings>(true);
 
@@ -71,7 +73,7 @@ namespace Code.Main
             {
                 system.Value
                     .Inject(heroSettings, joystick, enemySettings, groundSettings,
-                        spawnerSettings, WeaponSettings, healthBarView, restartButtonView);
+                        spawnerSettings, WeaponSettings, healthBarView, restartButtonView, menuSettings);
             }
         }
 
@@ -93,7 +95,8 @@ namespace Code.Main
         private void AddGameSystems()
         {
             _systems[SystemType.Init]
-                .Add(new RestartButtonInit())
+                .Add(new RestartGame())
+                .Add(new PauseInit())
                 .Add(new i_HealthBar())
                 .Add(new i_EnemySpawner())
                 .Add(new i_HeroWeapon())

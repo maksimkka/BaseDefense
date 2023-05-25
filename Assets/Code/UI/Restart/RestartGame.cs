@@ -1,17 +1,130 @@
-﻿using Leopotam.EcsLite;
+﻿using System.Threading.Tasks;
+using Code.EndGame;
+using Code.Enemy;
+using Code.Hero;
+using Code.Weapon;
+using DG.Tweening;
+using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine.UI;
 
 namespace Code.UI.Restart
 {
-    public class RestartGame : IEcsRunSystem
+    public class RestartGame : IEcsInitSystem
     {
-        private EcsFilterInject<Inc<RestartButtonData>> _restartButtonFilter = default;
-        public void Run(IEcsSystems systems)
+        private readonly EcsFilterInject<Inc<PauseData>> _pauseFilter = default;
+        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+
+        private readonly EcsPoolInject<RestartButtonData> _restartButtonData = default;
+        private readonly EcsCustomInject<RestartScreenView> _restartButtonView = default;
+        private readonly EcsPoolInject<EndGameMarker> _endGame = default;
+        private readonly EcsPoolInject<m_CanShoot> m_CanShoot = default;
+
+        private bool _isRestart;
+
+
+        public void Init(IEcsSystems systems)
         {
-            foreach (var entity in _restartButtonFilter.Value)
+            var entity = systems.GetWorld().NewEntity();
+            ref var restartButtonData = ref _restartButtonData.Value.Add(entity);
+            var button = _restartButtonView.Value.GetComponentInChildren<Button>();
+
+            restartButtonData.RestartButton = button;
+            restartButtonData.RestartButton.onClick.AddListener(NotifyTheDeathOfPlayer);
+        }
+
+        private async void NotifyTheDeathOfPlayer()
+        {
+            ToggleScreens(false);
+            NotifyEnemies();
+            NotifyWeapon();
+            await NotifyHero();
+            ToggleScreens(true);
+            NotifyHero();
+            NotifyEnemies();
+            NotifyWeapon();
+        }
+
+        private Task NotifyHero()
+        {
+            Task move = null;
+            foreach (var heroEntity in _heroFilter.Value)
             {
-                ref var restartButton = ref _restartButtonFilter.Pools.Inc1.Get(entity);
-                //restartButton.RestartButton.onClick
+                ref var hero = ref _heroFilter.Pools.Inc1.Get(heroEntity);
+                if (!_endGame.Value.Has(heroEntity))
+                {
+                    _endGame.Value.Add(heroEntity);
+                    hero.HeroGameObject.SetActive(false);
+                    move =  hero.HeroGameObject.transform.DOMove(hero.StartPosition.position, 1f)
+                        .SetEase(Ease.Linear)
+                        .AsyncWaitForCompletion();
+                }
+
+                else
+                {
+                    hero.CurrentHP = hero.DefaultHP;
+                    hero.Slider.value = hero.DefaultHP;
+                    hero.HeroGameObject.SetActive(true);
+                    _endGame.Value.Del(heroEntity);
+                }
+            }
+
+            return move ??= Task.CompletedTask;
+        }
+
+        private void NotifyEnemies()
+        {
+            foreach (var enemyEntity in _enemyFilter.Value)
+            {
+                ref var enemy = ref _enemyFilter.Pools.Inc1.Get(enemyEntity);
+                if (!_endGame.Value.Has(enemyEntity))
+                {
+                    _endGame.Value.Add(enemyEntity);
+                    enemy.IsHeroOnBase = true;
+                    enemy.States = EnemyStates.Idle;
+                }
+
+                else
+                {
+                    _endGame.Value.Del(enemyEntity);
+                }
+            }
+        }
+
+        private void NotifyWeapon()
+        {
+            foreach (var weaponEntity in _weaponFilter.Value)
+            {
+                if (!_endGame.Value.Has(weaponEntity))
+                {
+                    m_CanShoot.Value.Del(weaponEntity);
+                    _endGame.Value.Add(weaponEntity);
+                }
+
+                else
+                {
+                    _endGame.Value.Del(weaponEntity);
+                }
+            }
+        }
+
+        private void ToggleScreens(bool isShow)
+        {
+            foreach (var entity in _pauseFilter.Value)
+            {
+                ref var pauseData = ref _pauseFilter.Pools.Inc1.Get(entity);
+                if (isShow)
+                {
+                    pauseData.GameScreen.gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    pauseData.GameScreen.gameObject.SetActive(false);
+                    pauseData.RestartScreen.gameObject.SetActive(false);
+                }
             }
         }
     }

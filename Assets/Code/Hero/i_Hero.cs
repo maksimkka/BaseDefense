@@ -52,6 +52,9 @@ namespace Code.Hero
             hero.Speed = _heroSettings.Value.Speed;
             hero.CurrentHP = _heroSettings.Value.HP;
             hero.DefaultHP = _heroSettings.Value.HP;
+            hero.RegenDelay = _heroSettings.Value.RegenDelay;
+            hero.RegenHPTimer = _heroSettings.Value.RegenDelay;
+            hero.RegenRate = _heroSettings.Value.RegenRate;
             hero.Distance = _heroSettings.Value.Distance;
             hero.IdleAnimationHash = _idleAnimation;
             hero.RunAnimationHash = _runAnimation;

@@ -127,7 +127,8 @@ namespace Code.Main
                 .Add(new HeroDamageHandler())
                 .Add(new BonusCollector())
                 .Add(new InventoryCleaning())
-                .Add(new ChangerScore());
+                .Add(new ChangerScore())
+                .Add(new RegenerateHP());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

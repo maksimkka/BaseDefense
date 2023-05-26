@@ -3592,6 +3592,14 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: <RegenRate>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
+      propertyPath: <RegenDelay>k__BackingField
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201840489660707057, guid: 764a46e8904e8424bbf8252d7da07734, type: 3}
       propertyPath: <HealthPosition>k__BackingField
       value: 
       objectReference: {fileID: 1652328773}

@@ -12,6 +12,7 @@ namespace Code.Hero
         private readonly EcsFilterInject<Inc<c_CurrentGroundData, UnityPhysicsCollisionDataComponent>> _groundCollisionFilter = default;
         private readonly EcsPoolInject<r_ChangeGround> r_ChangeGround = default;
         private readonly EcsPoolInject<ClearInventoryRequest> _broughtBonusesToBaseRequest = default;
+        private readonly EcsPoolInject<RegenerateHPMarker> _regenerateHPMarker = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _groundCollisionFilter.Value)
@@ -31,6 +32,7 @@ namespace Code.Hero
                 {
                     groundData.IsBaseGround = true;
                     r_ChangeGround.Value.Add(groundDataEntity);
+                    _regenerateHPMarker.Value.Add(groundDataEntity);
                     ref var broughtBonusesToBaseRequest = ref _broughtBonusesToBaseRequest.Value.Add(groundDataEntity);
                     broughtBonusesToBaseRequest.IsRestart = false;
                     $"BASE COLLISION".Colored(Color.cyan).Log();
@@ -39,6 +41,7 @@ namespace Code.Hero
                 else if (collisionEnter.dto.OtherCollider.gameObject.layer == Layers.OtherGround)
                 {
                     groundData.IsBaseGround = false;
+                    _regenerateHPMarker.Value.Del(groundDataEntity);
                     r_ChangeGround.Value.Add(groundDataEntity);
                     $"GROUND COLLISION".Colored(Color.yellow).Log();
                 }

@@ -16,6 +16,9 @@ namespace Code.Hero
         public float Distance;
         public float BonusSearchRadius;
         public float Speed;
+        public float RegenHPTimer;
+        public float RegenDelay;
+        public int RegenRate;
         public int DefaultHP;
         public int CurrentHP;
         

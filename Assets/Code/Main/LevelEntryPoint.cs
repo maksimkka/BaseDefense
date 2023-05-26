@@ -7,6 +7,7 @@ using Code.Enemy;
 using Code.Game.HealthBar;
 using Code.Ground;
 using Code.Hero;
+using Code.Score;
 using Code.Spawner;
 using Code.UI;
 using Code.UI.Restart;
@@ -64,8 +65,9 @@ namespace Code.Main
             var joystick = FindObjectOfType<FloatingJoystick>(true);
             var spawnerSettings = FindObjectOfType<EnemySpawnerSettings>(true);
             var bonusesPoolSettings = FindObjectOfType<BonusesPoolSettings>(true);
-            var WeaponSettings = FindObjectOfType<WeaponSettings>(true);
+            var weaponSettings = FindObjectOfType<WeaponSettings>(true);
             var healthBarView = FindObjectOfType<HealthBarView>(true);
+            var scoreSettings = FindObjectOfType<ScoreSettings>(true);
             var inventorySettings = FindObjectOfType<InventorySettings>(true);
             var restartButtonView = FindObjectOfType<RestartScreenView>(true);
             var menuSettings = FindObjectOfType<HUDSettings>(true);
@@ -75,8 +77,8 @@ namespace Code.Main
             foreach (var system in _systems)
             {
                 system.Value.Inject(heroSettings, joystick, enemySettings, groundSettings,
-                        spawnerSettings, WeaponSettings, healthBarView, restartButtonView,
-                        menuSettings, bonusesPoolSettings, inventorySettings);
+                        spawnerSettings, weaponSettings, healthBarView, restartButtonView,
+                        menuSettings, bonusesPoolSettings, inventorySettings, scoreSettings);
             }
         }
 
@@ -99,6 +101,7 @@ namespace Code.Main
         {
             _systems[SystemType.Init]
                 .Add(new RestartGame())
+                .Add(new ScoreInit())
                 .Add(new PauseInit())
                 .Add(new i_HealthBar())
                 .Add(new BonusSpawnerInit())
@@ -122,7 +125,9 @@ namespace Code.Main
                 .Add(new s_HitHandling())
                 .Add(new ManagingBonusPool())
                 .Add(new HeroDamageHandler())
-                .Add(new BonusCollector());
+                .Add(new BonusCollector())
+                .Add(new InventoryCleaning())
+                .Add(new ChangerScore());
 
             _systems[SystemType.FixedUpdate]
                 .Add(new s_HeroMove())

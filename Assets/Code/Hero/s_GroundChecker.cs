@@ -11,6 +11,7 @@ namespace Code.Hero
     {
         private readonly EcsFilterInject<Inc<c_CurrentGroundData, UnityPhysicsCollisionDataComponent>> _groundCollisionFilter = default;
         private readonly EcsPoolInject<r_ChangeGround> r_ChangeGround = default;
+        private readonly EcsPoolInject<ClearInventoryRequest> _broughtBonusesToBaseRequest = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _groundCollisionFilter.Value)
@@ -30,6 +31,8 @@ namespace Code.Hero
                 {
                     groundData.IsBaseGround = true;
                     r_ChangeGround.Value.Add(groundDataEntity);
+                    ref var broughtBonusesToBaseRequest = ref _broughtBonusesToBaseRequest.Value.Add(groundDataEntity);
+                    broughtBonusesToBaseRequest.IsRestart = false;
                     $"BASE COLLISION".Colored(Color.cyan).Log();
                 }
 

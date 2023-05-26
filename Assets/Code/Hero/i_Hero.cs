@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Code.Bonus;
 using Code.Game.HealthBar;
 using Code.UnityPhysics;
 using Leopotam.EcsLite;
@@ -90,8 +91,8 @@ namespace Code.Hero
             inventoryData.InventoryObject = _inventorySettings.Value.gameObject.transform;
             inventoryData.CurrentPosition = inventoryData.InventoryObject;
             inventoryData.MaxStackSize = _inventorySettings.Value.MaxStackSize;
-            inventoryData.OffsetPosition = _inventorySettings.Value.OffsetPosition;
-            inventoryData.StackInventory = new List<GameObject>();
+            inventoryData.DefaultOffsetPosition = _inventorySettings.Value.OffsetPosition;
+            inventoryData.BonusEntities = new List<int>();
         }
     }
 }

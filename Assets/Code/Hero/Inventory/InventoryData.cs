@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using Code.Bonus;
 using UnityEngine;
 
 namespace Code.Hero
 {
     public struct InventoryData
     {
-        public List<GameObject> StackInventory;
+        public List<int> BonusEntities;
         public Transform InventoryObject;
         public Transform CurrentPosition;
         public int MaxStackSize;
-        public float OffsetPosition;
+        public float CurrentOffsetPosition;
+        public float DefaultOffsetPosition;
     }
 }

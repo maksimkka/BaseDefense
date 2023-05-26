@@ -16,7 +16,9 @@ namespace Code.UI.Restart
         private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
         private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
         private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsFilterInject<Inc<InventoryData>> _inventoryDataFilter = default;
 
+        private readonly EcsPoolInject<ClearInventoryRequest> _clearInventoryRequest = default;
         private readonly EcsPoolInject<RestartButtonData> _restartButtonData = default;
         private readonly EcsCustomInject<RestartScreenView> _restartButtonView = default;
         private readonly EcsPoolInject<EndGameMarker> _endGame = default;
@@ -40,6 +42,7 @@ namespace Code.UI.Restart
             ToggleScreens(false);
             NotifyEnemies();
             NotifyWeapon();
+            NotifyClearInventory();
             await NotifyHero();
             ToggleScreens(true);
             NotifyHero();
@@ -124,6 +127,18 @@ namespace Code.UI.Restart
                 {
                     pauseData.GameScreen.gameObject.SetActive(false);
                     pauseData.RestartScreen.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void NotifyClearInventory()
+        {
+            foreach (var entity in _inventoryDataFilter.Value)
+            {
+                if (!_clearInventoryRequest.Value.Has(entity))
+                {
+                    ref var clearInventory = ref _clearInventoryRequest.Value.Add(entity);
+                    clearInventory.IsRestart = true;
                 }
             }
         }

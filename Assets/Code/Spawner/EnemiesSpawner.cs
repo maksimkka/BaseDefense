@@ -5,27 +5,27 @@ using UnityEngine;
 
 namespace Code.Spawner
 {
-    public sealed class s_EnemiesSpawner : IEcsRunSystem
+    public class EnemiesSpawner : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<EnemySpawnerData>> _filterSpawnEnemy = default;
-        private float timerElapsed;
+        private float _timerElapsed;
         
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _filterSpawnEnemy.Value)
             {
                 ref var enemySpawnData = ref _filterSpawnEnemy.Pools.Inc1.Get(entity);
-                Timer(ref enemySpawnData);
+                TimerToSpawn(ref enemySpawnData);
             }
         }
 
-        private void Timer(ref EnemySpawnerData enemySpawnData)
+        private void TimerToSpawn(ref EnemySpawnerData enemySpawnData)
         {
             if(enemySpawnData.CountSpawnEnemies >= enemySpawnData.MaxSpawnEnemies) return;
-            timerElapsed += Time.deltaTime;
+            _timerElapsed += Time.deltaTime;
 
-            if (!(timerElapsed >= enemySpawnData.SpawnDelay)) return;
-            timerElapsed = 0;
+            if (!(_timerElapsed >= enemySpawnData.SpawnDelay)) return;
+            _timerElapsed = 0;
             SpawnObjects(enemySpawnData.EnemyPool, enemySpawnData.PlaceSpawnObject,
                 ref enemySpawnData.CountSpawnEnemies, enemySpawnData.SpawnerObject.transform);
         }

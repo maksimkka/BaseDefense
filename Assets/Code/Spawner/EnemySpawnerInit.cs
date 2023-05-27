@@ -3,15 +3,15 @@ using Leopotam.EcsLite.Di;
 
 namespace Code.Spawner
 {
-    public class i_EnemySpawner : IEcsInitSystem
+    public class EnemySpawnerInit : IEcsInitSystem
     {
-        private readonly EcsPoolInject<EnemySpawnerData> c_Spawner = default;
+        private readonly EcsPoolInject<EnemySpawnerData> _spawnerData = default;
         private readonly EcsCustomInject<EnemySpawnerSettings> _enemySpawnerSettings = default;
 
         public void Init(IEcsSystems systems)
         {
             var entity = systems.GetWorld().NewEntity();
-            ref var spawner = ref c_Spawner.Value.Add(entity);
+            ref var spawner = ref _spawnerData.Value.Add(entity);
             spawner.SpawnerObject = _enemySpawnerSettings.Value.gameObject;
             spawner.EnemyPrefab = _enemySpawnerSettings.Value.EnemyPrefab;
             spawner.MaxSpawnEnemies = _enemySpawnerSettings.Value.MaxSpawn;

@@ -20,7 +20,7 @@ using UnityEngine;
 namespace Code.Main
 {
     [DisallowMultipleComponent]
-    public sealed class LevelEntryPoint : MonoBehaviour
+    public class LevelEntryPoint : MonoBehaviour
     {
         private readonly Dictionary<SystemType, EcsSystems> _systems = new();
         private readonly CancellationTokenSource _tokenSources = new();
@@ -108,7 +108,7 @@ namespace Code.Main
                 .Add(new PauseInit())
                 .Add(new HealthBarInit())
                 .Add(new BonusSpawnerInit())
-                .Add(new i_EnemySpawner())
+                .Add(new EnemySpawnerInit())
                 .Add(new WeaponInit())
                 .Add(new BulletInit())
                 .Add(new HeroInit(_tokenSources))
@@ -118,7 +118,7 @@ namespace Code.Main
             _systems[SystemType.Update]
                 .Add(new GroundChecker())
                 .Add(new ChangerStateEnemies())
-                .Add(new s_EnemiesSpawner())
+                .Add(new EnemiesSpawner())
                 .Add(new EnemyMove())
                 .Add(new EnemyAttack())
                 .Add(new WeaponShooting())
@@ -134,8 +134,8 @@ namespace Code.Main
                 .Add(new RegenerateHP());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new HealthBarMove())
-                .Add(new s_HeroMove());
+                .Add(new HeroMove())
+                .Add(new HealthBarMove());
 
         }
 

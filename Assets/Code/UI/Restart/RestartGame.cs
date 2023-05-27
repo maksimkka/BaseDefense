@@ -22,7 +22,7 @@ namespace Code.UI.Restart
         private readonly EcsPoolInject<RestartButtonData> _restartButtonData = default;
         private readonly EcsCustomInject<RestartScreenView> _restartButtonView = default;
         private readonly EcsPoolInject<EndGameMarker> _endGame = default;
-        private readonly EcsPoolInject<CanShootMarker> m_CanShoot = default;
+        private readonly EcsPoolInject<CanShootMarker> _canShootMarker = default;
 
         private bool _isRestart;
 
@@ -101,7 +101,7 @@ namespace Code.UI.Restart
             {
                 if (!_endGame.Value.Has(weaponEntity))
                 {
-                    m_CanShoot.Value.Del(weaponEntity);
+                    _canShootMarker.Value.Del(weaponEntity);
                     _endGame.Value.Add(weaponEntity);
                 }
 

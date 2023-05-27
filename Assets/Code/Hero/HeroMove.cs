@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace Code.Hero
 {
-    public sealed class s_HeroMove : IEcsRunSystem
+    public sealed class HeroMove : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<HeroData, CurrentGroundData>, Exc<EndGameMarker>> _heroFilter = default;
         private readonly EcsFilterInject<Inc<EnemyData>, Exc<EndGameMarker>> _enemyFilter = default;
         private readonly EcsFilterInject<Inc<WeaponData>, Exc<EndGameMarker>> _weaponFilter = default;
-        private readonly EcsPoolInject<CanShootMarker> m_CanShoot = default;
+        private readonly EcsPoolInject<CanShootMarker> _canShootMaker = default;
         private readonly EcsCustomInject<FloatingJoystick> _joystick = default;
 
         public void Run(IEcsSystems systems)
@@ -99,11 +99,11 @@ namespace Code.Hero
             {
                 switch (isCanShoot)
                 {
-                    case true when !m_CanShoot.Value.Has(entity):
-                        m_CanShoot.Value.Add(entity);
+                    case true when !_canShootMaker.Value.Has(entity):
+                        _canShootMaker.Value.Add(entity);
                         break;
-                    case false when m_CanShoot.Value.Has(entity):
-                        m_CanShoot.Value.Del(entity);
+                    case false when _canShootMaker.Value.Has(entity):
+                        _canShootMaker.Value.Del(entity);
                         break;
                 }
             }

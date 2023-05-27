@@ -30,8 +30,11 @@ namespace Code.Hero
                 if (collisionEnter.dto.OtherCollider.gameObject.layer == Layers.BaseGround)
                 {
                     groundData.IsBaseGround = true;
-                    _changeGroundRequest.Value.Add(groundDataEntity);
-                    _regenerateHPMarker.Value.Add(groundDataEntity);
+                    if (!_changeGroundRequest.Value.Has(groundDataEntity) && !_regenerateHPMarker.Value.Has(groundDataEntity))
+                    {
+                        _changeGroundRequest.Value.Add(groundDataEntity);
+                        _regenerateHPMarker.Value.Add(groundDataEntity);
+                    }
                     ref var broughtBonusesToBaseRequest = ref _broughtBonusesToBaseRequest.Value.Add(groundDataEntity);
                     broughtBonusesToBaseRequest.IsRestart = false;
                 }

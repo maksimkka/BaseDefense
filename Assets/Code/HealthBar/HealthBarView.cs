@@ -2,7 +2,7 @@
 
 namespace Code.Game.HealthBar
 {
-    public sealed class HealthBarView : MonoBehaviour
+    public class HealthBarView : MonoBehaviour
     {
         
     }

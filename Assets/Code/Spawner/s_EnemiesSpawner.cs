@@ -1,5 +1,4 @@
-﻿using Code.Enemy;
-using Code.Pools;
+﻿using Code.Pools;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -8,8 +7,7 @@ namespace Code.Spawner
 {
     public sealed class s_EnemiesSpawner : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_EnemySpawnerData>> _filterSpawnEnemy = default;
-        private readonly EcsPoolInject<c_Enemy> _enemyData = default;
+        private readonly EcsFilterInject<Inc<EnemySpawnerData>> _filterSpawnEnemy = default;
         private float timerElapsed;
         
         public void Run(IEcsSystems systems)
@@ -21,7 +19,7 @@ namespace Code.Spawner
             }
         }
 
-        private void Timer(ref c_EnemySpawnerData enemySpawnData)
+        private void Timer(ref EnemySpawnerData enemySpawnData)
         {
             if(enemySpawnData.CountSpawnEnemies >= enemySpawnData.MaxSpawnEnemies) return;
             timerElapsed += Time.deltaTime;

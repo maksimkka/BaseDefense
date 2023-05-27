@@ -7,6 +7,7 @@ using Code.Enemy;
 using Code.Game.HealthBar;
 using Code.Ground;
 using Code.Hero;
+using Code.Hero.Inventory;
 using Code.Score;
 using Code.Spawner;
 using Code.UI;
@@ -72,7 +73,7 @@ namespace Code.Main
             var restartButtonView = FindObjectOfType<RestartScreenView>(true);
             var menuSettings = FindObjectOfType<HUDSettings>(true);
             var enemySettings = FindObjectsOfType<EnemySettings>(true);
-            var groundSettings = FindObjectsOfType<GroundSettings>(true);
+            var groundSettings = FindObjectsOfType<GroundMarker>(true);
 
             foreach (var system in _systems)
             {
@@ -94,7 +95,9 @@ namespace Code.Main
 
         private void AddDebugSystems()
         {
+#if UNITY_EDITOR
             _systems[SystemType.Update].Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem());
+#endif
         }
 
         private void AddGameSystems()
@@ -103,26 +106,26 @@ namespace Code.Main
                 .Add(new RestartGame())
                 .Add(new ScoreInit())
                 .Add(new PauseInit())
-                .Add(new i_HealthBar())
+                .Add(new HealthBarInit())
                 .Add(new BonusSpawnerInit())
                 .Add(new i_EnemySpawner())
-                .Add(new i_HeroWeapon())
-                .Add(new i_Bullet())
-                .Add(new i_Hero(_tokenSources))
-                .Add(new i_Enemy(_tokenSources))
-                .Add(new i_Ground());
+                .Add(new WeaponInit())
+                .Add(new BulletInit())
+                .Add(new HeroInit(_tokenSources))
+                .Add(new EnemyInit(_tokenSources))
+                .Add(new GroundInit());
 
             _systems[SystemType.Update]
-                .Add(new s_GroundChecker())
-                .Add(new s_ChangerStateEnemies())
+                .Add(new GroundChecker())
+                .Add(new ChangerStateEnemies())
                 .Add(new s_EnemiesSpawner())
-                .Add(new s_EnemyMove())
+                .Add(new EnemyMove())
                 .Add(new EnemyAttack())
-                .Add(new s_HeroShooting())
-                .Add(new s_BulletLifeCycle())
-                .Add(new s_BulletCollision())
-                .Add(new s_ReturnerBulletToPool())
-                .Add(new s_HitHandling())
+                .Add(new WeaponShooting())
+                .Add(new BulletLifeCycle())
+                .Add(new BulletCollision())
+                .Add(new ReturnerBulletToPool())
+                .Add(new EnemyHitHandling())
                 .Add(new ManagingBonusPool())
                 .Add(new HeroDamageHandler())
                 .Add(new BonusCollector())
@@ -131,8 +134,9 @@ namespace Code.Main
                 .Add(new RegenerateHP());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new s_HeroMove())
-                .Add(new s_HealthBarMove());
+                .Add(new HealthBarMove())
+                .Add(new s_HeroMove());
+
         }
 
         private void OnDestroy()

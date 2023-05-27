@@ -3,9 +3,9 @@ using Leopotam.EcsLite.Di;
 
 namespace Code.Spawner
 {
-    public sealed class i_EnemySpawner : IEcsInitSystem
+    public class i_EnemySpawner : IEcsInitSystem
     {
-        private readonly EcsPoolInject<c_EnemySpawnerData> c_Spawner = default;
+        private readonly EcsPoolInject<EnemySpawnerData> c_Spawner = default;
         private readonly EcsCustomInject<EnemySpawnerSettings> _enemySpawnerSettings = default;
 
         public void Init(IEcsSystems systems)

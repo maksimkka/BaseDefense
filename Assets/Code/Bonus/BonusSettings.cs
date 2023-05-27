@@ -7,6 +7,7 @@ namespace Code.Bonus
     {
         [field: SerializeField] public BonusType BonusType { get; private set; }
         [field: SerializeField] public int BonusValue { get; private set; }
-        public int BonusEntity { get; set; }
+        [field: SerializeField] public float ForceDirectionDiapason { get; private set; }
+        [field: SerializeField] public float ForceRotationDiapason { get; private set; }
     }
 }

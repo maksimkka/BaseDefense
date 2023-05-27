@@ -1,6 +1,6 @@
 ﻿using Code.EndGame;
 using Code.Enemy;
-using Code.Logger;
+using Code.Ground;
 using Code.Weapon;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -10,10 +10,10 @@ namespace Code.Hero
 {
     public sealed class s_HeroMove : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData, c_CurrentGroundData>, Exc<EndGameMarker>> _heroFilter = default;
-        private readonly EcsFilterInject<Inc<c_Enemy>, Exc<EndGameMarker>> _enemyFilter = default;
-        private readonly EcsFilterInject<Inc<c_WeaponData>, Exc<EndGameMarker>> _weaponFilter = default;
-        private readonly EcsPoolInject<m_CanShoot> m_CanShoot = default;
+        private readonly EcsFilterInject<Inc<HeroData, CurrentGroundData>, Exc<EndGameMarker>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<EnemyData>, Exc<EndGameMarker>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<WeaponData>, Exc<EndGameMarker>> _weaponFilter = default;
+        private readonly EcsPoolInject<CanShootMarker> m_CanShoot = default;
         private readonly EcsCustomInject<FloatingJoystick> _joystick = default;
 
         public void Run(IEcsSystems systems)
@@ -28,14 +28,14 @@ namespace Code.Hero
             }
         }
 
-        private void Move(ref c_HeroData heroData)
+        private void Move(ref HeroData heroData)
         {
             heroData.HeroRigidBody.velocity = new Vector3(_joystick.Value.Horizontal * heroData.Speed,
                 heroData.HeroRigidBody.velocity.y, _joystick.Value.Vertical * heroData.Speed);
             
         }
 
-        private void IsCheckDistance(ref c_HeroData heroData, ref c_CurrentGroundData currentGroundData)
+        private void IsCheckDistance(ref HeroData heroData, ref CurrentGroundData currentGroundData)
         {
             heroData.TargetRotation = null;
             float closestDistance = Mathf.Infinity;
@@ -47,16 +47,15 @@ namespace Code.Hero
                 var distance = Vector3.Distance(heroData.HeroGameObject.transform.position,
                     enemy.EnemyGameObject.transform.position);
 
-                if (!currentGroundData.IsBaseGround && distance < closestDistance && distance <= heroData.Distance)
+                if (!currentGroundData.IsBaseGround && distance < closestDistance && distance <= heroData.DetectionDistance)
                 {
-                    // $"{enemy.EnemyGameObject.gameObject.GetHashCode()} ____ {distance} ____ {heroData.Distance}".Colored(Color.cyan).Log();
                     closestDistance = distance;
                     heroData.TargetRotation = enemy.EnemyGameObject.transform;
                 }
             }
         }
         
-        private void Rotate(ref c_HeroData heroData)
+        private void Rotate(ref HeroData heroData)
         {
             if (heroData.TargetRotation == null)
             {
@@ -110,7 +109,7 @@ namespace Code.Hero
             }
         }
 
-        private void ChangeAnimation(ref c_HeroData heroData)
+        private void ChangeAnimation(ref HeroData heroData)
         {
             if (_joystick.Value.Horizontal != 0 || _joystick.Value.Vertical != 0)
             {

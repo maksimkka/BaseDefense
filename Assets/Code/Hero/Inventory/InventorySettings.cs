@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Code.Hero
+namespace Code.Hero.Inventory
 {
     [DisallowMultipleComponent]
     public class InventorySettings : MonoBehaviour

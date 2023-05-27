@@ -3,7 +3,7 @@
 namespace Code.Weapon
 {
     [DisallowMultipleComponent]
-    public sealed class WeaponSettings : MonoBehaviour
+    public class WeaponSettings : MonoBehaviour
     {
         [field: SerializeField] public GameObject BulletPrefab { get; private set; }
         [field: SerializeField] public float ShootCooldown { get; private set; }

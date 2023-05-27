@@ -6,7 +6,7 @@ namespace Code.Hero
 {
     public class RegenerateHP : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData, RegenerateHPMarker>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<HeroData, RegenerateHPMarker>> _heroFilter = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _heroFilter.Value)

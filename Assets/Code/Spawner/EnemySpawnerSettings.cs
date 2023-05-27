@@ -3,7 +3,7 @@
 namespace Code.Spawner
 {
     [DisallowMultipleComponent]
-    public sealed class EnemySpawnerSettings : MonoBehaviour
+    public class EnemySpawnerSettings : MonoBehaviour
     {
         [field: SerializeField] public GameObject EnemyPrefab { get; private set; }
         [field: SerializeField] public MeshRenderer PlaneSpawnObject { get; private set; }

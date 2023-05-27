@@ -129,3 +129,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BonusType>k__BackingField: 1
   <BonusValue>k__BackingField: 5
+  <ForceDirectionDiapason>k__BackingField: 2.5
+  <ForceRotationDiapason>k__BackingField: 10

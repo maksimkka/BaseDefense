@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Code.Bonus;
 using UnityEngine;
 
-namespace Code.Hero
+namespace Code.Hero.Inventory
 {
     public struct InventoryData
     {

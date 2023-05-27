@@ -79,12 +79,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5290175865434c9fa9dd0eddf4582b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 10
-  <DetectionDistance>k__BackingField: 10
+  <Speed>k__BackingField: 3.2
+  <DetectionDistance>k__BackingField: 7
   <AttackDistance>k__BackingField: 2
-  <CooldownAttack>k__BackingField: 3
+  <CooldownAttack>k__BackingField: 2
   <HP>k__BackingField: 10
-  <Damage>k__BackingField: 2
+  <Damage>k__BackingField: 5
 --- !u!195 &7091965470037638033
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 200

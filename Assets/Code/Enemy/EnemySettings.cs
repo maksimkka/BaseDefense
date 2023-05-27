@@ -3,7 +3,7 @@
 namespace Code.Enemy
 {
     [DisallowMultipleComponent]
-    public sealed class EnemySettings : MonoBehaviour
+    public class EnemySettings : MonoBehaviour
     {
         [field: SerializeField] public float Speed { get; private set; }
         [field: SerializeField] public float DetectionDistance { get; private set; }
@@ -11,6 +11,5 @@ namespace Code.Enemy
         [field: SerializeField] public float CooldownAttack { get; private set; }
         [field: SerializeField] public int HP { get; private set; }
         [field: SerializeField] public int Damage { get; private set; }
-        public int Entity { get; set; }
     }
 }

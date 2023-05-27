@@ -10,7 +10,6 @@ namespace Code.Bonus
         public GameObject SpawnerParentObject;
         public GameObject RegularBonusPrefab;
         public GameObject MegaBonusPrefab;
-        //public Vector3 SpawnPosition;
         public int StartSizeRegularBonusPool;
         public int StartSizeMegaBonusPool;
         public float SpawnProbabilityRegularBonus;

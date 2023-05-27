@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Code.Bonus;
-using Code.Logger;
 using Code.Score;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
-namespace Code.Hero
+namespace Code.Hero.Inventory
 {
     public class InventoryCleaning : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<InventoryData, ClearInventoryRequest>> _InventoryDataFilter = default;
+        private readonly EcsFilterInject<Inc<InventoryData, ClearInventoryRequest>> _inventoryDataFilter = default;
         private readonly EcsFilterInject<Inc<BonusSpawnerData>> _bonusSpawnerDataFilter = default;
         private readonly EcsFilterInject<Inc<BonusData>> _bonusData = default;
         private readonly EcsFilterInject<Inc<ScoreData>> _scoreData = default;
@@ -22,14 +20,14 @@ namespace Code.Hero
         }
         private void ClearInventory()
         {
-            foreach (var currentGroundEntity in _InventoryDataFilter.Value)
+            foreach (var currentGroundEntity in _inventoryDataFilter.Value)
             {
-                ref var inventoryData = ref _InventoryDataFilter.Pools.Inc1.Get(currentGroundEntity);
-                ref var clearInventory = ref _InventoryDataFilter.Pools.Inc2.Get(currentGroundEntity);
+                ref var inventoryData = ref _inventoryDataFilter.Pools.Inc1.Get(currentGroundEntity);
+                ref var clearInventory = ref _inventoryDataFilter.Pools.Inc2.Get(currentGroundEntity);
                 inventoryData.CurrentOffsetPosition = inventoryData.DefaultOffsetPosition;
                 ReturnToPool(inventoryData.BonusEntities, clearInventory.IsRestart);
 
-                _InventoryDataFilter.Pools.Inc2.Del(currentGroundEntity);
+                _inventoryDataFilter.Pools.Inc2.Del(currentGroundEntity);
             }
         }
 
@@ -37,23 +35,23 @@ namespace Code.Hero
         {
             foreach (var entity in _bonusSpawnerDataFilter.Value)
             {
-                ref var BonusSpawnerData = ref _bonusSpawnerDataFilter.Pools.Inc1.Get(entity);
+                ref var bonusSpawnerData = ref _bonusSpawnerDataFilter.Pools.Inc1.Get(entity);
 
                 foreach (var bonus in bonusEntities)
                 {
                     ref var bonusData = ref _bonusData.Pools.Inc1.Get(bonus);
+                    var bonusCollider = bonusData.BonusGameObject.GetComponent<Collider>();
+                    
                     if (bonusData.BonusType == BonusType.RegularBonus)
                     {
-                        var bonusCollider = bonusData.BonusGameObject.GetComponent<Collider>();
-                        BonusSpawnerData.RegularBonusPool.ReturnObject(bonusCollider,
-                            BonusSpawnerData.SpawnerParentObject.transform);
+                        bonusSpawnerData.RegularBonusPool.ReturnObject(bonusCollider,
+                            bonusSpawnerData.SpawnerParentObject.transform);
                     }
 
                     else
                     {
-                        var bonusCollider = bonusData.BonusGameObject.GetComponent<Collider>();
-                        BonusSpawnerData.MegaBonusPool.ReturnObject(bonusCollider,
-                            BonusSpawnerData.SpawnerParentObject.transform);
+                        bonusSpawnerData.MegaBonusPool.ReturnObject(bonusCollider,
+                            bonusSpawnerData.SpawnerParentObject.transform);
                     }
                 }
             }

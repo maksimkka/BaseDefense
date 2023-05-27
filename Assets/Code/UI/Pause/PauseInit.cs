@@ -1,5 +1,4 @@
-﻿using Code.Logger;
-using Leopotam.EcsLite;
+﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
@@ -27,7 +26,6 @@ namespace Code.UI
 
             if (_isPause)
             {
-                $"qweqweqweqweqwe".Colored(Color.cyan).Log();
                 RestartScreen.SetActive(_isPause);
             }
             

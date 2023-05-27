@@ -1,5 +1,6 @@
 ﻿using Code.Bonus;
-using Code.Logger;
+using Code.Ground;
+using Code.Hero.Inventory;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Code.Hero
 {
     public class BonusCollector : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData, c_CurrentGroundData, InventoryData>> _heroData = default;
+        private readonly EcsFilterInject<Inc<HeroData, CurrentGroundData, InventoryData>> _heroData = default;
         private readonly EcsFilterInject<Inc<BonusData>> _bonusData = default;
         public void Run(IEcsSystems systems)
         {
@@ -22,7 +23,7 @@ namespace Code.Hero
             }
         }
 
-        private void FindBonus(ref c_HeroData heroData, ref InventoryData inventoryData)
+        private void FindBonus(ref HeroData heroData, ref InventoryData inventoryData)
         {
             foreach (var entity in _bonusData.Value)
             {
@@ -34,7 +35,7 @@ namespace Code.Hero
                 {
                     bonusData.BonusRigidbody.isKinematic = true;
                     bonusData.IsPickUp = true;
-                    var bonusSettings = bonusData.BonusGameObject.GetComponent<BonusSettings>().BonusEntity;
+                    var bonusSettings = entity;
                     AddBonusInInventory(ref inventoryData, ref bonusSettings);
                 }
             }

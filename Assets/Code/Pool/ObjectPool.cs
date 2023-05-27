@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace Code.Pools
 {
-    public sealed class ObjectPool <T> where T : Component
+    public class ObjectPool <T> where T : Component
     {
         private readonly Queue<T> objectPool;
         private readonly T prefab;
@@ -31,7 +31,6 @@ namespace Code.Pools
                 countObject++;
                 T obj = Object.Instantiate(prefab, parentTransform);
                 obj.name = prefab.name +  countObject;
-                //obj.name += countObject;
                 _initWithInECS?.Invoke(obj);
                 
                 ReturnObject(obj, parentObject);

@@ -8,44 +8,42 @@ namespace Code.Enemy
 {
     public class EnemyAttack : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_Enemy, HeroDetectedMarker>, Exc<EndGameMarker>> _enemyFilter = default;
-        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
-        private readonly EcsPoolInject<SubmitDamageRequest> SubmitDamageRequest;
+        private readonly EcsFilterInject<Inc<EnemyData, HeroDetectedMarker>, Exc<EndGameMarker>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<HeroData>> _heroFilter = default;
+        private readonly EcsPoolInject<SubmitDamageRequest> _submitDamageRequest = default;
 
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _enemyFilter.Value)
             {
                 ref var enemyData = ref _enemyFilter.Pools.Inc1.Get(entity);
-                if(!enemyData.EnemyGameObject.gameObject.activeSelf) continue;
+                if (!enemyData.EnemyGameObject.gameObject.activeSelf) continue;
                 Reload(ref enemyData);
                 Attack(ref enemyData);
             }
         }
 
-        private void Reload(ref c_Enemy enemyData)
+        private void Reload(ref EnemyData enemyDataData)
         {
-            if (!enemyData.IsReadyAttack)
+            if (!enemyDataData.IsReadyAttack)
             {
-                enemyData.CurrentReloadTime += Time.deltaTime;
-                if (enemyData.CurrentReloadTime >= enemyData.DefaultReloadTime)
+                enemyDataData.CurrentReloadTime += Time.deltaTime;
+                if (enemyDataData.CurrentReloadTime >= enemyDataData.DefaultReloadTime)
                 {
-                    enemyData.IsReadyAttack = true;
+                    enemyDataData.IsReadyAttack = true;
                 }
             }
         }
 
-        private void Attack(ref c_Enemy enemyData)
+        private void Attack(ref EnemyData enemyDataData)
         {
-            if (enemyData.CurrentDistance <= enemyData.AttackDistance)
+            if (enemyDataData.CurrentDistance <= enemyDataData.AttackDistance && enemyDataData.IsReadyAttack)
             {
-                if (enemyData.IsReadyAttack)
-                {
-                    enemyData.AnimationSwitcher.GetTimeAnimation(enemyData.ThrowAnimationHash, enemyData.RunAnimationHash);
-                    enemyData.IsReadyAttack = false;
-                    enemyData.CurrentReloadTime = 0;
-                    SendRequest(enemyData.Damage);
-                }
+                enemyDataData.AnimationSwitcher.GetTimeAnimation(enemyDataData.ThrowAnimationHash,
+                    enemyDataData.RunAnimationHash);
+                enemyDataData.IsReadyAttack = false;
+                enemyDataData.CurrentReloadTime = 0;
+                SendRequest(enemyDataData.Damage);
             }
         }
 
@@ -53,12 +51,12 @@ namespace Code.Enemy
         {
             foreach (var entity in _heroFilter.Value)
             {
-                if (!SubmitDamageRequest.Value.Has(entity))
+                if (!_submitDamageRequest.Value.Has(entity))
                 {
-                    SubmitDamageRequest.Value.Add(entity);
+                    _submitDamageRequest.Value.Add(entity);
                 }
 
-                ref var submitDamageRequest = ref SubmitDamageRequest.Value.Get(entity);
+                ref var submitDamageRequest = ref _submitDamageRequest.Value.Get(entity);
                 submitDamageRequest.DamageDone = damageDone;
                 submitDamageRequest.QueueForDamage++;
             }

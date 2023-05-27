@@ -1,5 +1,4 @@
-﻿using Code.Enemy;
-using Code.UI;
+﻿using Code.UI;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -7,9 +6,8 @@ namespace Code.Hero
 {
     public class HeroDamageHandler : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<c_HeroData, SubmitDamageRequest>> _heroDamagedFilter = default;
+        private readonly EcsFilterInject<Inc<HeroData, SubmitDamageRequest>> _heroDamagedFilter = default;
         private readonly EcsFilterInject<Inc<PauseData>> _pauseFilter = default;
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _heroDamagedFilter.Value)
@@ -33,7 +31,6 @@ namespace Code.Hero
 
             if (heroData.CurrentHP <= 0)
             {
-                //ChangeStateEnemies();
                 SwitchScreens();
                 heroData.CurrentHP = 0;
                 heroData.HeroGameObject.gameObject.SetActive(false);
@@ -49,15 +46,6 @@ namespace Code.Hero
                 
                 pause.GameScreen.gameObject.SetActive(false);
                 pause.RestartScreen.gameObject.SetActive(true);
-            }
-        }
-
-        private void ChangeStateEnemies()
-        {
-            foreach (var entity in _enemyFilter.Value)
-            {
-                ref var enemy = ref _enemyFilter.Pools.Inc1.Get(entity);
-                enemy.States = EnemyStates.Idle;
             }
         }
     }

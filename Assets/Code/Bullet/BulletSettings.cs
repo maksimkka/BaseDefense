@@ -1,5 +1,4 @@
-﻿using Code.Logger;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.Bullet
 {
@@ -8,11 +7,5 @@ namespace Code.Bullet
     {
         [field: SerializeField] public float DefaultLifeTime { get; private set; }
         [field: SerializeField] public int Damage { get; private set; }
-        public int Entity { get; private set; }
-        
-        public void SetEntity(int entity)
-        {
-            Entity = entity;
-        }
     }
 }

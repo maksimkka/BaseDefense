@@ -45,11 +45,12 @@ namespace Code.Bonus
             var bonusSettings = collider.GetComponent<BonusSettings>();
             ref var bonusData = ref _bonusData.Value.Add(entity);
 
-            bonusSettings.BonusEntity = entity;
             bonusData.BonusType = bonusSettings.BonusType;
             bonusData.BonusGameObject = bonusSettings.gameObject;
             bonusData.BonusRigidbody = bonusSettings.gameObject.GetComponent<Rigidbody>();
             bonusData.BonusValue = bonusSettings.BonusValue;
+            bonusData.ForceDirectionDiapason = bonusSettings.ForceDirectionDiapason;
+            bonusData.ForceRotationDiapason = bonusSettings.ForceRotationDiapason;
         }
     }
 }

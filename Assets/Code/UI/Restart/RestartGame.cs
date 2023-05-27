@@ -2,27 +2,27 @@
 using Code.EndGame;
 using Code.Enemy;
 using Code.Hero;
+using Code.Hero.Inventory;
 using Code.Weapon;
 using DG.Tweening;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine.UI;
 
 namespace Code.UI.Restart
 {
     public class RestartGame : IEcsInitSystem
     {
         private readonly EcsFilterInject<Inc<PauseData>> _pauseFilter = default;
-        private readonly EcsFilterInject<Inc<c_HeroData>> _heroFilter = default;
-        private readonly EcsFilterInject<Inc<c_Enemy>> _enemyFilter = default;
-        private readonly EcsFilterInject<Inc<c_WeaponData>> _weaponFilter = default;
+        private readonly EcsFilterInject<Inc<HeroData>> _heroFilter = default;
+        private readonly EcsFilterInject<Inc<EnemyData>> _enemyFilter = default;
+        private readonly EcsFilterInject<Inc<WeaponData>> _weaponFilter = default;
         private readonly EcsFilterInject<Inc<InventoryData>> _inventoryDataFilter = default;
 
         private readonly EcsPoolInject<ClearInventoryRequest> _clearInventoryRequest = default;
         private readonly EcsPoolInject<RestartButtonData> _restartButtonData = default;
         private readonly EcsCustomInject<RestartScreenView> _restartButtonView = default;
         private readonly EcsPoolInject<EndGameMarker> _endGame = default;
-        private readonly EcsPoolInject<m_CanShoot> m_CanShoot = default;
+        private readonly EcsPoolInject<CanShootMarker> m_CanShoot = default;
 
         private bool _isRestart;
 
@@ -31,9 +31,8 @@ namespace Code.UI.Restart
         {
             var entity = systems.GetWorld().NewEntity();
             ref var restartButtonData = ref _restartButtonData.Value.Add(entity);
-            var button = _restartButtonView.Value.GetComponentInChildren<Button>();
 
-            restartButtonData.RestartButton = button;
+            restartButtonData.RestartButton = _restartButtonView.Value.RestartButton;
             restartButtonData.RestartButton.onClick.AddListener(NotifyTheDeathOfPlayer);
         }
 

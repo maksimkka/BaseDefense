@@ -34,7 +34,7 @@ Material:
     - _RampThreshold: 0.5
     - __dummy__: 0
     m_Colors:
-    - _Color: {r: 0.031327844, g: 0.754717, b: 0.09373797, a: 1}
-    - _HColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SColor: {r: 1, g: 0.60766697, b: 0.3820755, a: 1}
+    - _Color: {r: 0.7336354, g: 0.8867924, b: 0.49693838, a: 1}
+    - _HColor: {r: 0.64267874, g: 0.8679245, b: 0.543681, a: 1}
+    - _SColor: {r: 0.52137184, g: 0.8679245, b: 0.45361334, a: 1}
   m_BuildTextureStacks: []

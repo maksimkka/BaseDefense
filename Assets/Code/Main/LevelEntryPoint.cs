@@ -134,8 +134,8 @@ namespace Code.Main
                 .Add(new RegenerateHP());
 
             _systems[SystemType.FixedUpdate]
-                .Add(new HeroMove())
-                .Add(new HealthBarMove());
+                .Add(new HealthBarMove())
+                .Add(new HeroMove());
 
         }
 
